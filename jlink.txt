@@ -1,0 +1,1 @@
+jlink --add-modules java.base,java.desktop,java.logging --output mini-jre --strip-debug --no-man-pages --no-header-files --compress=zip-9
