@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.rkade.ButtonsPanel">
   <grid id="27dc6" binding="mainButtonPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="648" height="298"/>
+      <xy x="20" y="20" width="726" height="276"/>
     </constraints>
     <properties>
       <autoscrolls value="false"/>
@@ -16,10 +16,10 @@
       <grid id="200ec" binding="bottomPanel" layout-manager="FlowLayout" hgap="2" vgap="5" flow-align="1">
         <constraints border-constraint="Center"/>
         <properties>
-          <maximumSize width="200" height="45"/>
-          <minimumSize width="200" height="45"/>
+          <maximumSize width="700" height="45"/>
+          <minimumSize width="700" height="45"/>
           <opaque value="false"/>
-          <preferredSize width="200" height="45"/>
+          <preferredSize width="700" height="45"/>
         </properties>
         <border type="none"/>
         <children>

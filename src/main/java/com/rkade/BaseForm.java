@@ -31,9 +31,11 @@ public abstract class BaseForm implements ActionListener, ChangeListener, FocusL
     }
 
     protected void setPanelEnabled(boolean enable) {
-        for (JComponent component : controls) {
-            component.setEnabled(enable);
-        }
+        //for (JComponent component : controls) {
+         //   if (component != null) {
+         //       component.setEnabled(enable);
+         //   }
+        //}
     }
 
     @Override
