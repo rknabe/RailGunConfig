@@ -23,12 +23,12 @@ import static io.github.libsdl4j.api.joystick.SdlJoystick.*;
 
 public class Device {
     public static final byte CMD_REPORT_ID = 15;
-    public static final byte DATA_REPORT_ID = 16;
+    public static final byte DATA_REPORT_ID = 1;
     public static final byte DATA_REPORT_VALUE_COUNT = 31;
-    public static final byte CMD_GET_VER = 1;
+    public static final byte CMD_GET_VER = 16;
     public static final byte CMD_GET_STEER = 2;
     public static final byte CMD_GET_ANALOG = 3;
-    public static final byte CMD_GET_BUTTONS = 4;
+    public static final byte CMD_GET_BUTTONS = 1;
     public static final byte CMD_GET_GAINS = 5;
     public static final byte CMD_GET_MISC = 6;
     public static final byte CMD_SET_RANGE = 10;

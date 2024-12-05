@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
 
-import static com.rkade.Device.DATA_REPORT_ID;
-
 public final class DeviceManager implements InputReportListener, DeviceRemovalListener {
     private final static Logger logger = Logger.getLogger(DeviceManager.class.getName());
     private final static int LEONARDO_VENDOR_ID = 0x2341;
@@ -149,11 +147,16 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
 
     @Override
     public void onInputReport(HidDevice hidDevice, byte id, byte[] data, int len) {
-        if (id == DATA_REPORT_ID) {
-            DataReport report = DataReportFactory.create(id, data);
-            notifyListenersDeviceUpdated(getDevice(hidDevice), null, report);
-            if (report instanceof VersionDataReport) {
-                versionReported = true;
+        if (id == Device.DATA_REPORT_ID || id == Device.CMD_GET_VER) {
+            List<DataReport> reports = DataReportFactory.create(id, data);
+            for (DataReport report : reports) {
+                if (report instanceof VersionDataReport) {
+                    if (versionReported) {
+                        continue;
+                    }
+                    versionReported = true;
+                }
+                notifyListenersDeviceUpdated(getDevice(hidDevice), null, report);
             }
         }
     }
@@ -199,16 +202,22 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                     try {
                         if (!versionReported) {
                             //only need to do this once
-                            getOutputReport(Device.CMD_GET_VER, (byte) 0, data);
+                            getOutputReport((byte)1, (byte) 0, data);
                         }
-                        getOutputReport(Device.CMD_GET_STEER, (byte) 0, data);
-                        for (byte i = 0; i < AXIS_COUNT; i++) {
-                            getOutputReport(Device.CMD_GET_ANALOG, i, data);
+                        else {
+                            //use this as heartbeat to check usb connections
+                            getOutputReport((byte)0, (byte) 0, data);
                         }
-                        getOutputReport(Device.CMD_GET_BUTTONS, (byte) 0, data);
-                        getOutputReport(Device.CMD_GET_GAINS, (byte) 0, data);
-                        getOutputReport(Device.CMD_GET_MISC, (byte) 0, data);
+
+                        //getOutputReport(Device.CMD_GET_STEER, (byte) 0, data);
+                        //for (byte i = 0; i < AXIS_COUNT; i++) {
+                        //    getOutputReport(Device.CMD_GET_ANALOG, i, data);
+                        //}
+                        //getOutputReport(Device.CMD_GET_BUTTONS, (byte) 0, data);
+                        //getOutputReport(Device.CMD_GET_GAINS, (byte) 0, data);
+                        //getOutputReport(Device.CMD_GET_MISC, (byte) 0, data);
                         failCount = 0;
+                        sleep(2000);
                     } catch (IOException ex) {
                         ++failCount;
                         if (failCount > 3) {

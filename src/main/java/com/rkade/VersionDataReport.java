@@ -8,7 +8,8 @@ public final class VersionDataReport extends DataReport {
 
     public VersionDataReport(byte reportType, byte reportIndex, short section, ByteBuffer buffer) {
         super(reportType, reportIndex, section);
-
+        byte cmd = buffer.get();
+        short args = buffer.getShort();
         id = getString(buffer, 12);
         version = getString(buffer, 6);
     }

@@ -476,7 +476,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         }
 
         if (report != null) {
-            if (report.getReportType() == Device.DATA_REPORT_ID) {
+            //if (report.getReportType() == Device.DATA_REPORT_ID) {
                 switch (report) {
                     case WheelDataReport wheelData -> {
                         if (mainTab.getSelectedComponent() == axesTab) {
@@ -511,7 +511,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     default -> {
                     }
                 }
-            }
+            //}
             if (isWaitingOnDevice) {
                 isWaitingOnDevice = false;
             }

@@ -2,33 +2,38 @@ package com.rkade;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class DataReportFactory {
 
-    public static DataReport create(byte reportType, byte[] data) {
-        if (reportType == Device.DATA_REPORT_ID) {
+    public static List<DataReport> create(byte reportType, byte[] data) {
+        List<DataReport> reports = new ArrayList<>(30);
+        if (reportType == Device.DATA_REPORT_ID || reportType == Device.CMD_GET_VER) {
             ByteBuffer buffer = ByteBuffer.allocate(data.length).order(ByteOrder.LITTLE_ENDIAN);
             buffer.put(data);
             buffer.rewind();
-            byte reportIndex = buffer.get();
-            short section = buffer.getShort();
+            //byte reportIndex = buffer.get();
+            //short section = buffer.getShort();
+            //short section = 0;
 
-            switch (reportIndex) {
-                case Device.CMD_GET_STEER:
-                    return new WheelDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_ANALOG:
-                    return new AxisDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_GAINS:
-                    return new GainsDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_MISC:
-                    return new MiscDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_BUTTONS:
-                    return new ButtonsDataReport(reportType, reportIndex, section, buffer);
-                case Device.CMD_GET_VER:
-                    return new VersionDataReport(reportType, reportIndex, section, buffer);
+            if (reportType == Device.CMD_GET_VER) {
+                reports.add(new VersionDataReport(reportType, (byte) 0, (short) 0, buffer));
+            } else {
+                reports.add(new ButtonsDataReport(reportType, (byte) 0, (short) 0, buffer));
             }
-        }
 
-        return null;
+            /*
+            return switch (reportType) {
+                case Device.CMD_GET_STEER -> new WheelDataReport(reportType, reportIndex, section, buffer);
+                case Device.CMD_GET_ANALOG -> new AxisDataReport(reportType, reportIndex, section, buffer);
+                case Device.CMD_GET_GAINS -> new GainsDataReport(reportType, reportIndex, section, buffer);
+                case Device.CMD_GET_MISC -> new MiscDataReport(reportType, reportIndex, section, buffer);
+                case Device.CMD_GET_BUTTONS -> new ButtonsDataReport(reportType, reportIndex, section, buffer);
+                case Device.CMD_GET_VER -> new VersionDataReport(reportType, reportIndex, section, buffer);
+                default -> null;
+            };*/
+        }
+        return reports;
     }
 }

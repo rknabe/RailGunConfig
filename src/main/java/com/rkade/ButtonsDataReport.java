@@ -10,25 +10,15 @@ public final class ButtonsDataReport extends DataReport {
 
     public ButtonsDataReport(byte reportType, byte reportIndex, short section, ByteBuffer buffer) {
         super(reportType, reportIndex, section);
+        //buffer.rewind();
         buttonsState = buffer.get();
-        buffer.rewind();
-        System.out.print("buttons:");
+
+        /*System.out.print("buttons:");
         for (byte b : buffer.array()) {
             System.out.print(b);
             System.out.print(':');
-        }
-        System.out.println();
-        /*
-        int buttonCount = buffer.limit();
-        for (int btnIndex = 0; btnIndex < buttonCount; btnIndex++) {
-            byte val = buffer.get();
-            buttonStates.add(btnIndex, val > 0);
-            System.out.print(val +  " : ") ;
-        }
-        System.out.println();
-        for (int btnIndex = buttonCount; btnIndex < 32; btnIndex++) {
-            buttonStates.add(btnIndex, false);
         }*/
+        //System.out.println(buttonsState);
     }
 
     public int getButtonsState() {
