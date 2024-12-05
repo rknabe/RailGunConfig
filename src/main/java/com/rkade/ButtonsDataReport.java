@@ -4,16 +4,31 @@ import java.nio.ByteBuffer;
 
 public final class ButtonsDataReport extends DataReport {
     private final int buttonsState;
-    private final byte shiftButton;
-    private final int debounce;
-    private final boolean multiplexShifterButtons;
+    private final byte shiftButton = 0;
+    private final int debounce = 0;
+    private final boolean multiplexShifterButtons = false;
 
     public ButtonsDataReport(byte reportType, byte reportIndex, short section, ByteBuffer buffer) {
         super(reportType, reportIndex, section);
-        buttonsState = buffer.getInt();
-        shiftButton = buffer.get();
-        debounce = Byte.toUnsignedInt(buffer.get());
-        multiplexShifterButtons = buffer.get() > 0;
+        buttonsState = buffer.get();
+        buffer.rewind();
+        System.out.print("buttons:");
+        for (byte b : buffer.array()) {
+            System.out.print(b);
+            System.out.print(':');
+        }
+        System.out.println();
+        /*
+        int buttonCount = buffer.limit();
+        for (int btnIndex = 0; btnIndex < buttonCount; btnIndex++) {
+            byte val = buffer.get();
+            buttonStates.add(btnIndex, val > 0);
+            System.out.print(val +  " : ") ;
+        }
+        System.out.println();
+        for (int btnIndex = buttonCount; btnIndex < 32; btnIndex++) {
+            buttonStates.add(btnIndex, false);
+        }*/
     }
 
     public int getButtonsState() {

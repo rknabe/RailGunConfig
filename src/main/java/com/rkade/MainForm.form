@@ -1024,9 +1024,9 @@
                 <properties>
                   <enabled value="true"/>
                   <horizontalAlignment value="2"/>
-                  <maximumSize width="145" height="20"/>
-                  <minimumSize width="145" height="20"/>
-                  <preferredSize width="145" height="20"/>
+                  <maximumSize width="175" height="20"/>
+                  <minimumSize width="175" height="20"/>
+                  <preferredSize width="175" height="20"/>
                   <text value="Device"/>
                 </properties>
               </component>
@@ -1035,23 +1035,11 @@
                 <properties>
                   <enabled value="true"/>
                   <focusable value="false"/>
-                  <horizontalAlignment value="4"/>
-                  <maximumSize width="70" height="17"/>
-                  <minimumSize width="60" height="17"/>
-                  <preferredSize width="70" height="20"/>
-                  <text value="Firmware:"/>
-                </properties>
-              </component>
-              <component id="a8f28" class="javax.swing.JLabel" binding="versionLabel">
-                <constraints/>
-                <properties>
-                  <enabled value="true"/>
-                  <focusable value="false"/>
-                  <horizontalAlignment value="2"/>
-                  <maximumSize width="70" height="20"/>
-                  <minimumSize width="70" height="20"/>
-                  <preferredSize width="70" height="20"/>
-                  <text value="Version"/>
+                  <horizontalAlignment value="0"/>
+                  <maximumSize width="110" height="20"/>
+                  <minimumSize width="110" height="20"/>
+                  <preferredSize width="110" height="20"/>
+                  <text value="Firmware"/>
                 </properties>
               </component>
               <component id="ea116" class="javax.swing.JLabel" binding="statusLabel">

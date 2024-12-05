@@ -107,7 +107,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JCheckBox constantSpringCheckBox;
     private ButtonsPanel buttonsPanel;
     private JPanel buttonsTab;
-    private JLabel versionLabel;
     private JCheckBox afcCheckBox;
     private JButton setMinButton;
     private JButton setMaxButton;
@@ -444,7 +443,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     public void deviceAttached(Device device) {
         this.device = device;
         deviceLabel.setText(device.getName());
-        versionLabel.setText(device.getFirmwareType() + ":" + device.getFirmwareVersion());
+        firmwareLabel.setText(device.getFirmwareType() + ":" + device.getFirmwareVersion());
         setPanelEnabled(true);
         for (AxisPanel axisPanel : axisPanels) {
             axisPanel.deviceAttached(device);
@@ -458,7 +457,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     @Override
     public void deviceDetached(Device device) {
         deviceLabel.setText("");
-        versionLabel.setText("");
+        firmwareLabel.setText("");
         this.device = null;
         setPanelEnabled(false);
         for (AxisPanel axisPanel : axisPanels) {
@@ -508,7 +507,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                         }
                     }
                     case VersionDataReport versionData ->
-                            versionLabel.setText(versionData.getId() + ":" + versionData.getVersion());
+                            firmwareLabel.setText(versionData.getId() + ":" + versionData.getVersion());
                     default -> {
                     }
                 }
@@ -1141,13 +1140,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         firmwareLabel.setPreferredSize(new Dimension(70, 20));
         firmwareLabel.setText("Firmware:");
         panel1.add(firmwareLabel);
-        versionLabel = new JLabel();
-        versionLabel.setEnabled(true);
-        versionLabel.setFocusable(false);
-        versionLabel.setHorizontalAlignment(2);
-        versionLabel.setPreferredSize(new Dimension(80, 20));
-        versionLabel.setText("Version");
-        panel1.add(versionLabel);
         statusLabel = new JLabel();
         statusLabel.setEnabled(true);
         statusLabel.setFocusable(false);

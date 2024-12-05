@@ -102,6 +102,7 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     private boolean getButtonState(ButtonsDataReport buttonsDataReport, long buttonIndex) {
+        //return buttonsDataReport.getButtonState(buttonIndex);
         return ((buttonsDataReport.getButtonsState() & (long) Math.pow(2, buttonIndex)) > 0);
     }
 
