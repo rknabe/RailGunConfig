@@ -14,11 +14,11 @@ public final class AxisDataReport extends DataReport {
         axis = 0;
         x = buffer.getShort();
         y = buffer.getShort();
-        while (buffer.hasRemaining()) {
-            System.out.println(buffer.getShort());
-        }
+        //while (buffer.hasRemaining()) {
+        //    System.out.println(buffer.getShort());
+        //}
         //xRaw = buffer.getShort();
-        System.out.println(x + ":" + y);
+        //System.out.println(x + ":" + y);
         //System.out.println(xRaw);
     }
 

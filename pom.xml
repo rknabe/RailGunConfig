@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.rkade</groupId>
-    <artifactId>RKadeWheelConfig</artifactId>
+    <artifactId>RKadeGunConfig</artifactId>
     <version>1.1.8.0</version>
     <packaging>jar</packaging>
-    <description>RKADE FFB Device Configuration Utility</description>
-    <name>RKadeWheelConfig</name>
+    <description>RKADE Gun Configuration Utility</description>
+    <name>RKadeGunConfig</name>
     <organization>
         <name>RKADE</name>
     </organization>
@@ -111,12 +111,12 @@
                         </goals>
                         <configuration>
                             <headerType>gui</headerType>
-                            <outfile>target/RKadeWheelConfig.exe</outfile>
-                            <jar>target/RKadeWheelConfig-${project.version}.jar</jar>
-                            <errTitle>RKadeWheelConfig</errTitle>
+                            <outfile>target/RKadeGunConfig.exe</outfile>
+                            <jar>target/RKadeGunConfig-${project.version}.jar</jar>
+                            <errTitle>RKadeGunConfig</errTitle>
                             <icon>src/main/resources/wheel.ico</icon>
                             <singleInstance>
-                                <mutexName>com.rkade.RKadeWheelConfig</mutexName>
+                                <mutexName>com.rkade.RKadeGunConfig</mutexName>
                             </singleInstance>
                             <classPath>
                                 <mainClass>com.rkade.App</mainClass>
@@ -131,12 +131,12 @@
                             </jre>
                             <versionInfo>
                                 <fileVersion>${project.version}</fileVersion>
-                                <fileDescription>FFB Wheel Device Config</fileDescription>
+                                <fileDescription>Arcade Gun Device Config</fileDescription>
                                 <copyright>Copyright 2024 Rusty Knabe</copyright>
                                 <productVersion>${project.version}</productVersion>
-                                <productName>RKadeWheelConfig</productName>
-                                <internalName>RKadeWheelConfig</internalName>
-                                <originalFilename>RKadeWheelConfig.exe</originalFilename>
+                                <productName>RKadeGunConfig</productName>
+                                <internalName>RKadeGunConfig</internalName>
+                                <originalFilename>RKadeGunConfig.exe</originalFilename>
                             </versionInfo>
                         </configuration>
                     </execution>
@@ -148,12 +148,12 @@
                         </goals>
                         <configuration>
                             <headerType>console</headerType>
-                            <outfile>target/RKadeWheelConfig-cli.exe</outfile>
-                            <jar>target/RKadeWheelConfig-${project.version}.jar</jar>
-                            <errTitle>RKadeWheelConfig</errTitle>
+                            <outfile>target/RKadeGunConfig-cli.exe</outfile>
+                            <jar>target/RKadeGunConfig-${project.version}.jar</jar>
+                            <errTitle>RKadeGunConfig</errTitle>
                             <icon>src/main/resources/wheel.ico</icon>
                             <singleInstance>
-                                <mutexName>com.rkade.RKadeWheelConfig</mutexName>
+                                <mutexName>com.rkade.RKadeGunConfig</mutexName>
                             </singleInstance>
                             <classPath>
                                 <mainClass>com.rkade.App</mainClass>
@@ -168,12 +168,12 @@
                             </jre>
                             <versionInfo>
                                 <fileVersion>${project.version}</fileVersion>
-                                <fileDescription>FFB Wheel Device Config</fileDescription>
+                                <fileDescription>Arcade Gun Device Config</fileDescription>
                                 <copyright>Copyright 2024 Rusty Knabe</copyright>
                                 <productVersion>${project.version}</productVersion>
-                                <productName>RKadeWheelConfig</productName>
-                                <internalName>RKadeWheelConfig</internalName>
-                                <originalFilename>RKadeWheelConfig-cli.exe</originalFilename>
+                                <productName>RKadeGunConfig</productName>
+                                <internalName>RKadeGunConfig</internalName>
+                                <originalFilename>RKadeGunConfig-cli.exe</originalFilename>
                             </versionInfo>
                         </configuration>
                     </execution>

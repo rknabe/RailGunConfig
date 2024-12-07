@@ -16,15 +16,17 @@ public abstract class BaseForm implements ActionListener, ChangeListener, FocusL
     protected List<JComponent> controls;
 
     protected void setupControlListener() {
-        for (JComponent component : controls) {
-            component.addFocusListener(this);
-            switch (component) {
-                case AbstractButton button -> button.addActionListener(this);
-                case JTextField textField -> textField.addActionListener(this);
-                case JSlider slider -> slider.addChangeListener(this);
-                case JSpinner spinner -> spinner.addChangeListener(this);
-                case JComboBox<?> comboBox -> comboBox.addActionListener(this);
-                default -> {
+        if (controls != null) {
+            for (JComponent component : controls) {
+                component.addFocusListener(this);
+                switch (component) {
+                    case AbstractButton button -> button.addActionListener(this);
+                    case JTextField textField -> textField.addActionListener(this);
+                    case JSlider slider -> slider.addChangeListener(this);
+                    case JSpinner spinner -> spinner.addChangeListener(this);
+                    case JComboBox<?> comboBox -> comboBox.addActionListener(this);
+                    default -> {
+                    }
                 }
             }
         }

@@ -14,7 +14,6 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     private final static Logger logger = Logger.getLogger(ButtonsPanel.class.getName());
     private final List<JButton> switchButtons;
     private JPanel mainButtonPanel;
-    private JSpinner debounceSpinner;
     private JPanel bottomPanel;
     private JPanel topPanel;
     private JButton button1;
@@ -49,9 +48,8 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     private JButton button30;
     private JButton button31;
     private JButton button32;
-    private JCheckBox multiplexCheckbox;
-    private JSpinner shiftSpinner;
-    private JLabel shiftLabel;
+
+
     private Device device = null;
 
     {
@@ -62,7 +60,7 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     public ButtonsPanel() {
-        controls = List.of(debounceSpinner, multiplexCheckbox, shiftSpinner, shiftLabel);
+        controls = List.of();
         switchButtons = List.of(button1, button2, button3, button4, button5, button6, button7, button8,
                 button9, button10, button11, button12, button13, button14, button15, button16,
                 button17, button18, button19, button20, button21, button22, button23, button24,
@@ -70,12 +68,6 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
 
         setPanelEnabled(false);
         setupControlListener();
-
-        SpinnerModel debounceModel = new SpinnerNumberModel(0, 0, 255, 1);
-        debounceSpinner.setModel(debounceModel);
-
-        SpinnerModel shiftModel = new SpinnerNumberModel(0, 0, 14, 1);
-        shiftSpinner.setModel(shiftModel);
     }
 
     @Override
@@ -107,15 +99,6 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     private void updateControls(ButtonsDataReport buttonsDataReport) {
-        debounceSpinner.setValue(buttonsDataReport.getDebounce());
-        byte shiftButton = buttonsDataReport.getShiftButton();
-        if (shiftButton < 0) {
-            shiftButton = 0;
-        }
-        shiftSpinner.setValue(shiftButton);
-        if (!multiplexCheckbox.isFocusOwner()) {
-            multiplexCheckbox.setSelected(buttonsDataReport.isMultiplexShifterButtons());
-        }
         for (JButton button : switchButtons) {
             button.setSelected(getButtonState(buttonsDataReport, switchButtons.indexOf(button)));
         }
@@ -130,9 +113,6 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     private boolean handleAction(ActionEvent e) {
-        if (e.getActionCommand().equals(multiplexCheckbox.getActionCommand())) {
-            return device.setMultiplexShifter(multiplexCheckbox.isSelected());
-        }
         return true;
     }
 
@@ -140,19 +120,6 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     public void stateChanged(ChangeEvent e) {
         if (device != null) {
             boolean status = true;
-            if (e.getSource() == debounceSpinner) {
-                Number ival = (Number) debounceSpinner.getValue();
-                if (ival == null) {
-                    ival = 0;
-                }
-                status = device.setDebounce(ival.byteValue());
-            } else if (e.getSource() == shiftSpinner) {
-                Number ival = (Number) shiftSpinner.getValue();
-                if (ival == null) {
-                    ival = 0;
-                }
-                status = device.setShiftButton(ival.byteValue());
-            }
             if (!status) {
                 logger.warning("State Changed, failed for:" + e.getSource());
             }
@@ -180,11 +147,7 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
         bottomPanel.setMinimumSize(new Dimension(100, 35));
         bottomPanel.setPreferredSize(new Dimension(400, 45));
         mainButtonPanel.add(bottomPanel, BorderLayout.CENTER);
-        debounceSpinner = new JSpinner();
-        debounceSpinner.setAlignmentY(1.0f);
-        debounceSpinner.setMinimumSize(new Dimension(90, 35));
-        debounceSpinner.setPreferredSize(new Dimension(60, 25));
-        bottomPanel.add(debounceSpinner);
+
         final JLabel label1 = new JLabel();
         label1.setAlignmentY(1.0f);
         label1.setHorizontalAlignment(2);
@@ -192,11 +155,6 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
         label1.setPreferredSize(new Dimension(226, 17));
         label1.setText("Debounce  (0-255)");
         bottomPanel.add(label1);
-        multiplexCheckbox = new JCheckBox();
-        multiplexCheckbox.setAlignmentY(1.0f);
-        multiplexCheckbox.setPreferredSize(new Dimension(290, 25));
-        multiplexCheckbox.setText("Multiplex 4 Switch Shifter to 6 Buttons");
-        bottomPanel.add(multiplexCheckbox);
         topPanel = new JPanel();
         topPanel.setLayout(new GridBagLayout());
         topPanel.setAutoscrolls(false);
@@ -589,7 +547,6 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
         gbc.gridx = 7;
         gbc.gridy = 3;
         topPanel.add(button32, gbc);
-        label1.setLabelFor(debounceSpinner);
     }
 
     /**

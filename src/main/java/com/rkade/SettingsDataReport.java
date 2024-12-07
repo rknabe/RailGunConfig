@@ -14,8 +14,8 @@ public final class SettingsDataReport extends DataReport {
         super(reportType);
         byte cmd = buffer.get();
         short args = buffer.getShort();
-        id = getString(buffer, 9);
-        version = getString(buffer, 5);
+        id = getString(buffer, 10);
+        version = getString(buffer, 6);
         xAxisMinimum = buffer.getShort();
         xAxisMaximum = buffer.getShort();
         yAxisMinimum = buffer.getShort();

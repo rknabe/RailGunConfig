@@ -54,6 +54,10 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
             int nx = normalize(x, xAxisMinimum, xAxisMaximum, 0, w - target.getWidth(null));
             int ny = normalize(y, yAxisMinimum, yAxisMaximum, 0, h - target.getHeight(null));
             g.drawImage(target, nx, ny, null);
+
+            nx = normalize(x, Short.MIN_VALUE, Short.MAX_VALUE, 0, 1023);
+            ny = normalize(y, Short.MIN_VALUE, Short.MAX_VALUE, 0, 1023);
+            System.out.println(nx + ":" + ny);
         } else if (target.getWidth(null) > 0) {
             g.drawImage(target, w / 2, h / 2, this);
         } else {
@@ -62,7 +66,7 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
     }
 
     private int map(int value, int in_min, int in_max, int out_min, int out_max) {
-        return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        return (int) Math.round(((double) value - in_min) * (double) (out_max - out_min) / (double) (in_max - in_min) + out_min);
     }
 
     private int normalize(int value, int physicalMinimum, int physicalMaximum, int logicalMinimum, int logicalMaximum) {

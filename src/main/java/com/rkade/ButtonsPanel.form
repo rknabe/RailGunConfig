@@ -22,58 +22,7 @@
           <preferredSize width="700" height="45"/>
         </properties>
         <border type="none"/>
-        <children>
-          <component id="9f82f" class="javax.swing.JSpinner" binding="debounceSpinner">
-            <constraints/>
-            <properties>
-              <alignmentY value="1.0"/>
-              <maximumSize width="60" height="25"/>
-              <minimumSize width="60" height="25"/>
-              <preferredSize width="60" height="25"/>
-              <requestFocusEnabled value="false"/>
-            </properties>
-          </component>
-          <component id="ab876" class="javax.swing.JLabel">
-            <constraints/>
-            <properties>
-              <alignmentY value="1.0"/>
-              <horizontalAlignment value="2"/>
-              <labelFor value="9f82f"/>
-              <maximumSize width="150" height="17"/>
-              <minimumSize width="150" height="17"/>
-              <preferredSize width="150" height="17"/>
-              <text value="Debounce  (0-255)"/>
-            </properties>
-          </component>
-          <component id="878e" class="javax.swing.JSpinner" binding="shiftSpinner">
-            <constraints/>
-            <properties>
-              <maximumSize width="60" height="25"/>
-              <minimumSize width="60" height="25"/>
-              <preferredSize width="60" height="25"/>
-              <toolTipText value="Hold this button and press another to create a virtual button (Button 17+)"/>
-            </properties>
-          </component>
-          <component id="12cfc" class="javax.swing.JLabel" binding="shiftLabel">
-            <constraints/>
-            <properties>
-              <text value="Shift/Hotkey Button"/>
-              <toolTipText value="Hold this button and press another to create a virtual button (Button 17+)"/>
-            </properties>
-          </component>
-          <component id="1b2c9" class="javax.swing.JCheckBox" binding="multiplexCheckbox">
-            <constraints/>
-            <properties>
-              <alignmentY value="1.0"/>
-              <horizontalAlignment value="0"/>
-              <maximumSize width="370" height="25"/>
-              <minimumSize width="370" height="25"/>
-              <preferredSize width="370" height="25"/>
-              <text value="Demux 4 Switch Shifter to 6 Buttons"/>
-              <toolTipText value="Happ 6 speed shifters use 4 switches, and this option converts the four switches to six buttons"/>
-            </properties>
-          </component>
-        </children>
+        <children/>
       </grid>
       <grid id="5f99" binding="topPanel" layout-manager="GridBagLayout">
         <constraints border-constraint="North"/>

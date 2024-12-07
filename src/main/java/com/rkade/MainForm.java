@@ -9,12 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class MainForm extends BaseForm implements DeviceListener, ActionListener, FocusListener, ChangeListener {
     private final static Logger logger = Logger.getLogger(MainForm.class.getName());
     private JPanel mainPanel;
-    private JTabbedPane mainTab;
     private JPanel ffbTab;
     private JPanel bottomPanel;
     private JLabel deviceLabel;
@@ -68,6 +69,8 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JCheckBox constantSpringCheckBox;
     private ButtonsPanel buttonsPanel;
     private JPanel axisPanelParent;
+    private JButton btnCalibrate;
+    private JButton button2;
     private JPanel buttonsTab;
     private JCheckBox afcCheckBox;
     private Device device = null;
@@ -92,9 +95,11 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
         axisPanelParent.add(axisPanel);
 
+        controls = List.of(btnCalibrate);
+
         //setupAxisPanels();
         // setupGainPanels();
-        //setupControlListener();
+        setupControlListener();
         setPanelEnabled(false);
     }
 
@@ -108,6 +113,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     private boolean handleAction(ActionEvent e) {
         if (device != null) {
+            if (Objects.equals(e.getActionCommand(), btnCalibrate.getActionCommand())) {
+                btnCalibrate.setText("Calibrating...");
+            }
         }
         return true;
     }
@@ -225,11 +233,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         mainPanel.setLayout(new GridBagLayout());
         mainPanel.setMinimumSize(new Dimension(1060, 400));
         mainPanel.setPreferredSize(new Dimension(1060, 800));
-        mainTab = new JTabbedPane();
-        mainTab.setMinimumSize(new Dimension(1060, 400));
-        mainTab.setName("Inputs");
-        mainTab.setPreferredSize(new Dimension(1060, 800));
-        mainTab.setTabLayoutPolicy(0);
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -237,12 +240,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        mainPanel.add(mainTab, gbc);
         axesTab = new JPanel();
         axesTab.setLayout(new BorderLayout(0, 0));
         axesTab.setMinimumSize(new Dimension(1060, 60));
         axesTab.setPreferredSize(new Dimension(1060, 800));
-        mainTab.addTab("Axes", axesTab);
         topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         topPanel.setAutoscrolls(true);
@@ -616,7 +617,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
         buttonsTab = new JPanel();
         buttonsTab.setLayout(new BorderLayout(0, 0));
-        mainTab.addTab("Buttons", buttonsTab);
         buttonsPanel = new ButtonsPanel();
         buttonsTab.add(buttonsPanel.$$$getRootComponent$$$(), BorderLayout.WEST);
         bottomPanel = new JPanel();

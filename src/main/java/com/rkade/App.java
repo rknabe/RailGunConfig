@@ -20,7 +20,7 @@ public class App {
 
     public static void main(String[] args) {
         boolean showGui = true;
-        System.setProperty("fazecast.jSerialComm.appid", "com.rkade.RKadeWheelConfig");
+        System.setProperty("fazecast.jSerialComm.appid", "com.rkade.RKadeGunConfig");
 
         Options options = setupCommandLineOptions();
 
@@ -100,11 +100,11 @@ public class App {
                     //com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMonokaiProIJTheme.setup();
                     //com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme.setup();
                     FlatMaterialDesignDarkIJTheme.setup();
-                    JFrame frame = new JFrame("RKADE Wheel Config");
+                    JFrame frame = new JFrame("RKADE Gun Config");
                     MainForm mainForm = new MainForm();
                     frame.setContentPane(mainForm.getRootComponent());
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    Image icon = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("wheel32.png"));
+                    Image icon = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("target.png"));
                     frame.setIconImage(icon);
                     frame.pack();
                     frame.setLocationRelativeTo(null);
