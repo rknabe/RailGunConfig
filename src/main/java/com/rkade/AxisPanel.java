@@ -16,7 +16,7 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
     private int x = 0, y = 0;
 
     public AxisPanel() {
-        target = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("target.png"));
+        target = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("crosshair.png"));
     }
 
     public void setXAxisMinimum(short xAxisMinimum) {

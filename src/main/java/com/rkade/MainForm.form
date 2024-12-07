@@ -128,7 +128,9 @@
                     <children>
                       <grid id="c158b" binding="axisPanelParent" layout-manager="BorderLayout" hgap="0" vgap="0">
                         <constraints border-constraint="Center"/>
-                        <properties/>
+                        <properties>
+                          <autoscrolls value="false"/>
+                        </properties>
                         <border type="none"/>
                         <children>
                           <grid id="a1a7d" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">

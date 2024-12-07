@@ -47,7 +47,7 @@
               <outfile>target/RKadeGunConfig.exe</outfile>
               <jar>target/RKadeGunConfig-${project.version}.jar</jar>
               <errTitle>RKadeGunConfig</errTitle>
-              <icon>src/main/resources/wheel.ico</icon>
+              <icon>src/main/resources/crosshair.ico</icon>
               <singleInstance>
                 <mutexName>com.rkade.RKadeGunConfig</mutexName>
               </singleInstance>
@@ -84,7 +84,7 @@
               <outfile>target/RKadeGunConfig-cli.exe</outfile>
               <jar>target/RKadeGunConfig-${project.version}.jar</jar>
               <errTitle>RKadeGunConfig</errTitle>
-              <icon>src/main/resources/wheel.ico</icon>
+              <icon>src/main/resources/crosshair.ico</icon>
               <singleInstance>
                 <mutexName>com.rkade.RKadeGunConfig</mutexName>
               </singleInstance>
