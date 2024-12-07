@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class DataReportFactory {
 
     public static List<DataReport> create(byte reportType, byte[] data) {
-        List<DataReport> reports = new ArrayList<>(30);
+        List<DataReport> reports = new ArrayList<>();
         if (reportType == Device.DATA_REPORT_ID || reportType == Device.CMD_GET_VER) {
             ByteBuffer buffer = ByteBuffer.allocate(data.length).order(ByteOrder.LITTLE_ENDIAN);
             buffer.put(data);
@@ -18,9 +18,10 @@ public abstract class DataReportFactory {
             //short section = 0;
 
             if (reportType == Device.CMD_GET_VER) {
-                reports.add(new VersionDataReport(reportType, (byte) 0, (short) 0, buffer));
+                reports.add(new SettingsDataReport(reportType, buffer));
             } else {
-                reports.add(new ButtonsDataReport(reportType, (byte) 0, (short) 0, buffer));
+                reports.add(new ButtonsDataReport(reportType, buffer));
+                reports.add(new AxisDataReport(reportType, buffer));
             }
 
             /*

@@ -150,7 +150,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         if (id == Device.DATA_REPORT_ID || id == Device.CMD_GET_VER) {
             List<DataReport> reports = DataReportFactory.create(id, data);
             for (DataReport report : reports) {
-                if (report instanceof VersionDataReport) {
+                if (report instanceof SettingsDataReport) {
                     if (versionReported) {
                         continue;
                     }

@@ -2,54 +2,12 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.rkade.GainPanel">
   <grid id="27dc6" binding="gainPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
     <constraints>
-      <xy x="20" y="20" width="595" height="43"/>
+      <xy x="20" y="20" width="269" height="200"/>
     </constraints>
     <properties>
-      <minimumSize width="562" height="41"/>
+      <minimumSize width="200" height="200"/>
     </properties>
     <border type="none"/>
-    <children>
-      <component id="788d9" class="javax.swing.JLabel" binding="labelText">
-        <constraints/>
-        <properties>
-          <horizontalAlignment value="2"/>
-          <minimumSize width="105" height="17"/>
-          <preferredSize width="105" height="17"/>
-          <text value=""/>
-        </properties>
-      </component>
-      <component id="5d64b" class="javax.swing.JFormattedTextField" binding="gainText">
-        <constraints/>
-        <properties>
-          <focusLostBehavior value="1"/>
-          <horizontalAlignment value="2"/>
-          <minimumSize width="57" height="30"/>
-          <preferredSize width="57" height="30"/>
-        </properties>
-      </component>
-      <component id="3b1c9" class="javax.swing.JLabel" binding="gainPercent">
-        <constraints/>
-        <properties>
-          <enabled value="true"/>
-          <minimumSize width="37" height="17"/>
-          <preferredSize width="37" height="17"/>
-          <text value="100%"/>
-        </properties>
-      </component>
-      <component id="a01a8" class="javax.swing.JSlider" binding="gainSlider">
-        <constraints/>
-        <properties>
-          <majorTickSpacing value="128"/>
-          <maximum value="2048"/>
-          <minimumSize width="350" height="31"/>
-          <minorTickSpacing value="32"/>
-          <name value=""/>
-          <paintLabels value="false"/>
-          <paintTicks value="true"/>
-          <preferredSize width="350" height="31"/>
-          <value value="1024"/>
-        </properties>
-      </component>
-    </children>
+    <children/>
   </grid>
 </form>
