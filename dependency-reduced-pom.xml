@@ -4,7 +4,7 @@
   <groupId>com.rkade</groupId>
   <artifactId>RKadeGunConfig</artifactId>
   <name>RKadeGunConfig</name>
-  <version>1.1.8.0</version>
+  <version>1.0.0.0</version>
   <description>RKADE Gun Configuration Utility</description>
   <inceptionYear>2024</inceptionYear>
   <organization>
