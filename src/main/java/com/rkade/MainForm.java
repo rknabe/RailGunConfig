@@ -20,9 +20,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JPanel bottomPanel;
     private JLabel deviceLabel;
     private JLabel statusLabel;
-    private JPanel topPanel;
     private JLabel firmwareLabel;
-    private JPanel axesTab;
     private JButton defaultsButton;
     private JButton loadButton;
     private JButton saveButton;
@@ -30,6 +28,8 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JPanel axisPanelParent;
     private JButton btnCalibrate;
     private JButton button2;
+    private JPanel northPanel;
+    private JPanel buttonPanel;
     private Device device = null;
     private volatile boolean isWaitingOnDevice = false;
 
@@ -189,17 +189,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         mainPanel.setLayout(new GridBagLayout());
         mainPanel.setMinimumSize(new Dimension(1060, 400));
         mainPanel.setPreferredSize(new Dimension(1060, 800));
-        axesTab = new JPanel();
-        axesTab.setLayout(new BorderLayout(0, 0));
-        axesTab.setMinimumSize(new Dimension(1060, 60));
-        axesTab.setPreferredSize(new Dimension(1060, 800));
-        topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        topPanel.setAutoscrolls(true);
-        topPanel.setMaximumSize(new Dimension(32767, 32767));
-        topPanel.setMinimumSize(new Dimension(1040, 60));
-        topPanel.setPreferredSize(new Dimension(1040, 890));
-        topPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         buttonsPanel = new ButtonsPanel();
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 4, 4));

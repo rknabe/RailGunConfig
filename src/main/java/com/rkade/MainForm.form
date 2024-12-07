@@ -98,71 +98,45 @@
           </component>
         </children>
       </grid>
-      <grid id="d7650" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <grid id="d7650" binding="northPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="North"/>
-        <properties/>
+        <properties>
+          <minimumSize width="400" height="750"/>
+          <preferredSize width="400" height="750"/>
+        </properties>
         <border type="none"/>
         <children>
-          <grid id="b8e5d" binding="axesTab" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="c158b" binding="axisPanelParent" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="Center"/>
             <properties>
-              <minimumSize width="500" height="60"/>
-              <preferredSize width="500" height="750"/>
+              <autoscrolls value="false"/>
             </properties>
-            <border type="none"/>
+            <border type="bevel-lowered"/>
             <children>
-              <grid id="2743d" binding="topPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-                <constraints border-constraint="Center"/>
-                <properties>
-                  <autoscrolls value="true"/>
-                  <maximumSize width="104" height="80"/>
-                  <minimumSize width="104" height="60"/>
-                  <preferredSize width="104" height="80"/>
-                </properties>
-                <border type="bevel-lowered"/>
+              <grid id="a1a7d" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints border-constraint="South"/>
+                <properties/>
+                <border type="bevel-raised"/>
                 <children>
-                  <grid id="39b3d" layout-manager="BorderLayout" hgap="0" vgap="0">
-                    <constraints border-constraint="Center"/>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <grid id="c158b" binding="axisPanelParent" layout-manager="BorderLayout" hgap="0" vgap="0">
-                        <constraints border-constraint="Center"/>
-                        <properties>
-                          <autoscrolls value="false"/>
-                        </properties>
-                        <border type="none"/>
-                        <children>
-                          <grid id="a1a7d" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-                            <constraints border-constraint="South"/>
-                            <properties/>
-                            <border type="none"/>
-                            <children>
-                              <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
-                                <constraints/>
-                                <properties>
-                                  <text value="Calibrate"/>
-                                </properties>
-                              </component>
-                              <component id="4eff0" class="javax.swing.JButton" binding="button2" default-binding="true">
-                                <constraints/>
-                                <properties>
-                                  <text value="Button"/>
-                                </properties>
-                              </component>
-                            </children>
-                          </grid>
-                        </children>
-                      </grid>
-                      <nested-form id="63a6a" form-file="com/rkade/ButtonsPanel.form" binding="buttonsPanel">
-                        <constraints border-constraint="South"/>
-                      </nested-form>
-                    </children>
-                  </grid>
+                  <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
+                    <constraints/>
+                    <properties>
+                      <text value="Calibrate"/>
+                    </properties>
+                  </component>
+                  <component id="4eff0" class="javax.swing.JButton" binding="button2" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Button"/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
             </children>
           </grid>
+          <nested-form id="63a6a" form-file="com/rkade/ButtonsPanel.form" binding="buttonsPanel">
+            <constraints border-constraint="South"/>
+          </nested-form>
         </children>
       </grid>
     </children>
