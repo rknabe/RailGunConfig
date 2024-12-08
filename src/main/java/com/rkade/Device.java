@@ -26,9 +26,13 @@ public class Device {
     public static final byte DATA_REPORT_ID = 1;
     public static final byte DATA_REPORT_VALUE_COUNT = 31;
     public static final byte CMD_GET_VER = 16;
-    public static final byte CMD_GET_STEER = 2;
+    public static final byte CMD_GET_SETTINGS = 1;
+    public static final byte CMD_HEARTBEAT = 0;
+    public static final byte CMD_SET_AXIS_LIMITS = 2;
+    public static final byte CMD_EESAVE = 16;
+    public static final byte CMD_EELOAD = 17;
+    public static final byte CMD_DEFAULT = 18;
     public static final byte CMD_GET_ANALOG = 3;
-    public static final byte CMD_GET_BUTTONS = 1;
     public static final byte CMD_GET_GAINS = 5;
     public static final byte CMD_GET_MISC = 6;
     public static final byte CMD_SET_RANGE = 10;
@@ -37,24 +41,6 @@ public class Device {
     public static final byte CMD_SET_AADZ = 13;
     public static final byte CMD_SET_AAAUTOLIM = 14;
     public static final byte CMD_SET_SHIFT_BTN = 15;
-    public static final byte CMD_SET_DEBOUNCE = 16;
-    public static final byte CMD_SET_GAIN = 17;
-    public static final byte CMD_SET_MISC = 18;
-    public static final byte MISC_MAXVD = 0;
-    public static final byte MISC_MAXVF = 1;
-    public static final byte MISC_MAXACC = 2;
-    public static final byte MISC_MINF = 3;
-    public static final byte MISC_MAXF = 4;
-    public static final byte MISC_CUTF = 5;
-    public static final byte MISC_FFBBD = 6;
-    public static final byte MISC_ENDSTOP = 7;
-    public static final byte MISC_CONSTANT_SPRING = 8;
-    public static final byte MISC_AFC_STARTUP = 9;
-    public static final byte MISC_MPLEX_SHIFTER = 10;
-    public static final byte CMD_SET_ODTRIM = 19;
-    public static final byte CMD_EELOAD = 20;
-    public static final byte CMD_EESAVE = 21;
-    public static final byte CMD_DEFAULT = 22;
     public static final byte CMD_CENTER = 23;
     public static final byte CMD_WHEEL_LIMITS = 24;
     public static final byte CMD_WHEEL_CENTER = 25;
@@ -147,47 +133,8 @@ public class Device {
         return sendCommand(CMD_SET_SHIFT_BTN, buttonIndex);
     }
 
-    public synchronized boolean setAxisLimits(short axisIndex, Short minValue, short maxValue) {
-        return sendCommand(CMD_SET_AALIMITS, axisIndex, minValue, maxValue);
-    }
-
-    public synchronized boolean setAxisCenter(short axisIndex, short center) {
-        return sendCommand(CMD_SET_AACENTER, axisIndex, center);
-    }
-
-    public synchronized boolean setAxisDeadZone(short axisIndex, short deadZone) {
-        return sendCommand(CMD_SET_AADZ, axisIndex, deadZone);
-    }
-
-    public synchronized boolean setAxisAutoLimit(short axisIndex, short flag) {
-        return sendCommand(CMD_SET_AAAUTOLIM, axisIndex, flag);
-    }
-
-    public synchronized boolean setAxisEnabledAndTrim(short axisIndex, short enabledFlag, short trimIndex) {
-        return sendCommand(CMD_SET_ODTRIM, axisIndex, enabledFlag, trimIndex);
-    }
-
-    public synchronized boolean setGainValue(short gainIndex, short gainValue) {
-        return sendCommand(CMD_SET_GAIN, gainIndex, gainValue);
-    }
-
-    public synchronized boolean setMiscValue(short miscType, short value) {
-        return sendCommand(CMD_SET_MISC, miscType, value);
-    }
-
-    public synchronized boolean setMiscValue(short miscType, boolean value) {
-        if (value) {
-            return sendCommand(CMD_SET_MISC, miscType, (short) 1);
-        }
-        return sendCommand(CMD_SET_MISC, miscType, (short) 0);
-    }
-
-    public synchronized boolean setDebounce(byte value) {
-        return sendCommand(CMD_SET_DEBOUNCE, value);
-    }
-
-    public synchronized boolean setMultiplexShifter(boolean value) {
-        return setMiscValue(MISC_MPLEX_SHIFTER, value);
+    public synchronized boolean setAxisLimits(short xMinValue, short xMaxValue, short yMinValue, short yMaxValue) {
+        return sendCommand(CMD_SET_AXIS_LIMITS, xMinValue, xMaxValue, yMinValue, yMaxValue);
     }
 
     public synchronized boolean setConstantSpring(boolean state) {
@@ -262,15 +209,19 @@ public class Device {
     }
 
     private boolean sendCommand(byte command, short arg1, short arg2) {
-        return sendCommand(command, arg1, arg2, (byte) 0);
+        return sendCommand(command, arg1, arg2, (short) 0);
     }
 
     private boolean sendCommand(byte command, short arg1, short arg2, short arg3) {
+        return sendCommand(command, arg1, arg2, arg3, (short) 0);
+    }
+
+    private boolean sendCommand(byte command, short arg1, short arg2, short arg3, short arg4) {
         final boolean[] status = {true};
         //TODO: this will not work with CLI only invocation
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             public Void doInBackground() {
-                byte[] data = new byte[7];
+                byte[] data = new byte[9];
                 data[0] = command;
                 data[1] = getFirstByte(arg1);
                 data[2] = getSecondByte(arg1);
@@ -281,7 +232,10 @@ public class Device {
                 data[5] = getFirstByte(arg3);
                 data[6] = getSecondByte(arg3);
 
-                int ret = hidDevice.setOutputReport(CMD_REPORT_ID, data, 7);
+                data[7] = getFirstByte(arg4);
+                data[8] = getSecondByte(arg4);
+
+                int ret = hidDevice.setOutputReport(CMD_REPORT_ID, data, 9);
                 if (ret <= 0) {
                     logger.severe("Device returned error on Save:" + ret);
                     status[0] = false;

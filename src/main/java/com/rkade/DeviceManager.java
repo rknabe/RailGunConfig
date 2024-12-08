@@ -151,9 +151,9 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
             List<DataReport> reports = DataReportFactory.create(id, data);
             for (DataReport report : reports) {
                 if (report instanceof SettingsDataReport) {
-                    if (versionReported) {
-                        continue;
-                    }
+                    //if (versionReported) {
+                    //    continue;
+                    //}
                     versionReported = true;
                 }
                 notifyListenersDeviceUpdated(getDevice(hidDevice), null, report);
@@ -161,7 +161,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         }
     }
 
-    private void getOutputReport(byte dataType, byte dataIndex, byte[] data) throws IOException {
+    public void getOutputReport(byte dataType, byte dataIndex, byte[] data) throws IOException {
         data[0] = dataType;
         data[1] = dataIndex;
         int ret = openedDevice.setOutputReport(Device.CMD_REPORT_ID, data, OUTPUT_REPORT_DATA_LENGTH);
@@ -202,11 +202,11 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                     try {
                         if (!versionReported) {
                             //only need to do this once
-                            getOutputReport((byte)1, (byte) 0, data);
+                            getOutputReport(Device.CMD_GET_SETTINGS, (byte) 0, data);
                         }
                         else {
                             //use this as heartbeat to check usb connections
-                            getOutputReport((byte)0, (byte) 0, data);
+                           getOutputReport(Device.CMD_HEARTBEAT, (byte) 0, data);
                         }
 
                         //getOutputReport(Device.CMD_GET_STEER, (byte) 0, data);

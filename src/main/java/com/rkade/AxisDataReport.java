@@ -3,8 +3,8 @@ package com.rkade;
 import java.nio.ByteBuffer;
 
 public final class AxisDataReport extends DataReport {
-    private final int x;
-    private final int y;
+    private final short x;
+    private final short y;
     //private final int xRaw;
     //private final int yMax;
     private final int axis;
@@ -26,11 +26,11 @@ public final class AxisDataReport extends DataReport {
         return axis;
     }
 
-    public int getX() {
+    public short getX() {
         return x;
     }
 
-    public int getY() {
+    public short getY() {
         return y;
     }
 }

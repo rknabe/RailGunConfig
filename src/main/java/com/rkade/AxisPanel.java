@@ -9,35 +9,30 @@ import java.awt.event.ActionListener;
 
 public class AxisPanel extends JPanel implements DeviceListener, ActionListener, ChangeListener {
     private final Image target;
-    private short xAxisMinimum;
-    private short xAxisMaximum;
-    private short yAxisMinimum;
-    private short yAxisMaximum;
-    private int x = 0, y = 0;
+    private short xAxisMinimum = Short.MIN_VALUE;
+    private short xAxisMaximum = Short.MAX_VALUE;
+    private short yAxisMinimum = Short.MIN_VALUE;
+    private short yAxisMaximum = Short.MAX_VALUE;
+    private short x = 0, y = 0;
+    private boolean isCalibrating = false;
+    private short xMax = Short.MAX_VALUE;
+    private short xMin = Short.MIN_VALUE;
+    private short yMax = Short.MAX_VALUE;
+    private short yMin = Short.MIN_VALUE;
 
     public AxisPanel() {
         target = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("crosshair.png"));
     }
 
-    public void setXAxisMinimum(short xAxisMinimum) {
-        this.xAxisMinimum = xAxisMinimum;
-    }
-
-    public void setXAxisMaximum(short xAxisMaximum) {
-        this.xAxisMaximum = xAxisMaximum;
-    }
-
-    public void setYAxisMinimum(short yAxisMinimum) {
-        this.yAxisMinimum = yAxisMinimum;
-    }
-
-    public void setYAxisMaximum(short yAxisMaximum) {
-        this.yAxisMaximum = yAxisMaximum;
-    }
-
-    private void setAxisValues(int x, int y) {
+    private void setAxisValues(short x, short y) {
         this.x = x;
         this.y = y;
+        if (isCalibrating) {
+            xMax = (short) Math.max(x, xMax);
+            xMin = (short) Math.min(x, xMin);
+            yMax = (short) Math.max(y, yMax);
+            yMin = (short) Math.min(y, yMin);
+        }
         repaint();
     }
 
@@ -50,26 +45,16 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
         super.paintComponent(g);
         int h = getHeight();
         int w = getWidth();
-        if (xAxisMaximum > xAxisMinimum) {
-            int nx = normalize(x, xAxisMinimum, xAxisMaximum, 0, w - target.getWidth(null));
-            int ny = normalize(y, yAxisMinimum, yAxisMaximum, 0, h - target.getHeight(null));
-            g.drawImage(target, nx, ny, null);
-
-            nx = normalize(x, Short.MIN_VALUE, Short.MAX_VALUE, 0, 1023);
-            ny = normalize(y, Short.MIN_VALUE, Short.MAX_VALUE, 0, 1023);
-            System.out.println(nx + ":" + ny);
-        } else if (target.getWidth(null) > 0) {
-            g.drawImage(target, w / 2, h / 2, this);
-        } else {
-            repaint();
-        }
+        int nx = normalize(x, xAxisMinimum, xAxisMaximum, 0, w - target.getWidth(null));
+        int ny = normalize(y, yAxisMinimum, yAxisMaximum, 0, h - target.getHeight(null));
+        g.drawImage(target, nx, ny, null);
     }
 
     private int map(int value, int in_min, int in_max, int out_min, int out_max) {
         return (int) Math.round(((double) value - in_min) * (double) (out_max - out_min) / (double) (in_max - in_min) + out_min);
     }
 
-    private int normalize(int value, int physicalMinimum, int physicalMaximum, int logicalMinimum, int logicalMaximum) {
+    public int normalize(int value, int physicalMinimum, int physicalMaximum, int logicalMinimum, int logicalMaximum) {
         int realMinimum = Math.min(physicalMinimum, physicalMaximum);
         int realMaximum = Math.max(physicalMinimum, physicalMaximum);
 
@@ -112,5 +97,52 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
     @Override
     public void stateChanged(ChangeEvent e) {
 
+    }
+
+    public void setCalibrating(boolean calibrating) {
+        isCalibrating = calibrating;
+        if (isCalibrating) {
+            xMax = Short.MIN_VALUE;
+            xMin = Short.MAX_VALUE;
+            yMax = Short.MIN_VALUE;
+            yMin = Short.MAX_VALUE;
+        } else {
+            xAxisMinimum = xMin;
+            xAxisMaximum = xMax;
+            yAxisMinimum = yMin;
+            yAxisMaximum = yMax;
+        }
+    }
+
+    public short getXAxisMinimum() {
+        return xAxisMinimum;
+    }
+
+    public void setXAxisMinimum(short xAxisMinimum) {
+        this.xAxisMinimum = xAxisMinimum;
+    }
+
+    public short getXAxisMaximum() {
+        return xAxisMaximum;
+    }
+
+    public void setXAxisMaximum(short xAxisMaximum) {
+        this.xAxisMaximum = xAxisMaximum;
+    }
+
+    public short getYAxisMinimum() {
+        return yAxisMinimum;
+    }
+
+    public void setYAxisMinimum(short yAxisMinimum) {
+        this.yAxisMinimum = yAxisMinimum;
+    }
+
+    public short getYAxisMaximum() {
+        return yAxisMaximum;
+    }
+
+    public void setYAxisMaximum(short yAxisMaximum) {
+        this.yAxisMaximum = yAxisMaximum;
     }
 }
