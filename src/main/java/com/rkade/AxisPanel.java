@@ -19,6 +19,8 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
     private short xMin = Short.MIN_VALUE;
     private short yMax = Short.MAX_VALUE;
     private short yMin = Short.MIN_VALUE;
+    private int targetWidth = 0;
+    private int targetHeight = 0;
 
     public AxisPanel() {
         target = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("crosshair.png"));
@@ -45,8 +47,12 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
         super.paintComponent(g);
         int h = getHeight();
         int w = getWidth();
-        int nx = normalize(x, xAxisMinimum, xAxisMaximum, 0, w - target.getWidth(null));
-        int ny = normalize(y, yAxisMinimum, yAxisMaximum, 0, h - target.getHeight(null));
+        if (targetWidth == 0 || targetHeight == 0) {
+            targetWidth = target.getWidth(null);
+            targetHeight = target.getHeight(null);
+        }
+        int nx = normalize(x, xAxisMinimum, xAxisMaximum, 0, w - targetWidth);
+        int ny = normalize(y, yAxisMinimum, yAxisMaximum, 0, h - targetHeight);
         g.drawImage(target, nx, ny, null);
     }
 
