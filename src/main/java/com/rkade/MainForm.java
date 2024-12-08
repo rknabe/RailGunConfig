@@ -26,9 +26,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private ButtonsPanel buttonsPanel;
     private JPanel axisPanelParent;
     private JButton btnCalibrate;
-    private JButton button2;
     private JPanel northPanel;
     private JPanel buttonPanel;
+    private JCheckBox cbAutoRecoil;
     private Device device = null;
     private volatile boolean isWaitingOnDevice = false;
     private volatile boolean isCalibrating = false;
@@ -51,7 +51,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
         axisPanelParent.add(axisPanel);
 
-        controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton);
+        controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil);
 
         //setupAxisPanels();
         // setupGainPanels();
@@ -114,6 +114,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 boolean status = device.loadFromEeprom();
                 showWaitDialog();
                 return status;
+            }
+            else if (e.getActionCommand().equals(cbAutoRecoil.getActionCommand())) {
+                return device.setAutoRecoil(cbAutoRecoil.isSelected());
             }
         }
 
@@ -224,6 +227,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     axisPanel.setXAxisMaximum(settings.getXAxisMaximum());
                     axisPanel.setYAxisMinimum(settings.getYAxisMinimum());
                     axisPanel.setYAxisMaximum(settings.getYAxisMaximum());
+                    cbAutoRecoil.setSelected(settings.isAutoRecoil());
                 }
                 case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
                 default -> {

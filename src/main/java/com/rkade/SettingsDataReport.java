@@ -9,6 +9,7 @@ public final class SettingsDataReport extends DataReport {
     private final short xAxisMaximum;
     private final short yAxisMinimum;
     private final short yAxisMaximum;
+    private final boolean autoRecoil;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
@@ -20,6 +21,11 @@ public final class SettingsDataReport extends DataReport {
         xAxisMaximum = buffer.getShort();
         yAxisMinimum = buffer.getShort();
         yAxisMaximum = buffer.getShort();
+        autoRecoil = buffer.get() > 0;
+    }
+
+    public boolean isAutoRecoil() {
+        return autoRecoil;
     }
 
     public short getXAxisMinimum() {

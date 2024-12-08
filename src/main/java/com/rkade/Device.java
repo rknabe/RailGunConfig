@@ -29,10 +29,10 @@ public class Device {
     public static final byte CMD_GET_SETTINGS = 1;
     public static final byte CMD_HEARTBEAT = 0;
     public static final byte CMD_SET_AXIS_LIMITS = 2;
+    public static final byte CMD_SET_AUTO_RECOIL = 3;
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
-    public static final byte CMD_GET_ANALOG = 3;
     public static final byte CMD_GET_GAINS = 5;
     public static final byte CMD_GET_MISC = 6;
     public static final byte CMD_SET_RANGE = 10;
@@ -91,6 +91,10 @@ public class Device {
 
     public synchronized boolean loadFromEeprom() {
         return sendCommand(CMD_EELOAD);
+    }
+
+    public synchronized boolean setAutoRecoil(boolean state) {
+        return sendCommand(CMD_SET_AUTO_RECOIL, state);
     }
 
     public synchronized boolean setWheelCenter() {
@@ -202,6 +206,10 @@ public class Device {
 
     private boolean sendCommand(byte command) {
         return sendCommand(command, (short) 0, (short) 0, (short) 0);
+    }
+
+    private boolean sendCommand(byte command, boolean state) {
+        return sendCommand(command, (short) (state ? 1 : 0), (short) 0);
     }
 
     private boolean sendCommand(byte command, short arg1) {

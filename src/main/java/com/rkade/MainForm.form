@@ -113,21 +113,22 @@
             </properties>
             <border type="bevel-lowered"/>
             <children>
-              <grid id="a1a7d" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+              <grid id="a1a7d" binding="buttonPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints border-constraint="South"/>
                 <properties/>
                 <border type="bevel-raised"/>
                 <children>
                   <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
-                    <constraints/>
+                    <constraints border-constraint="West"/>
                     <properties>
                       <text value="Calibrate"/>
                     </properties>
                   </component>
-                  <component id="4eff0" class="javax.swing.JButton" binding="button2" default-binding="true">
-                    <constraints/>
+                  <component id="80905" class="javax.swing.JCheckBox" binding="cbAutoRecoil">
+                    <constraints border-constraint="East"/>
                     <properties>
-                      <text value="Button"/>
+                      <horizontalAlignment value="4"/>
+                      <text value="Auto Recoil"/>
                     </properties>
                   </component>
                 </children>
