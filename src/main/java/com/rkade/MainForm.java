@@ -72,8 +72,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
             if (Objects.equals(e.getActionCommand(), btnCalibrate.getActionCommand())) {
                 if (!isCalibrating) {
                     btnCalibrate.setEnabled(false);
-                    btnCalibrate.setText("Calibrating...");
                     isCalibrating = true;
+                    //set limits to max before calibrating
+                    device.setAxisLimits((short) 0, (short) 1023, (short) 0, (short) 1023);
+                    btnCalibrate.setText("Calibrating...");
                     axisPanel.setCalibrating(true);
                     JLabel validator = new JLabel("<html><body>Please move the crosshair to each corner</body></html>");
                     JOptionPane pane = new JOptionPane(validator, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION,
