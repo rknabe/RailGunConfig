@@ -51,8 +51,8 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
             targetWidth = target.getWidth(null);
             targetHeight = target.getHeight(null);
         }
-        int nx = normalize(x, xAxisMinimum, xAxisMaximum, 0, w - targetWidth);
-        int ny = normalize(y, yAxisMinimum, yAxisMaximum, 0, h - targetHeight);
+        int nx = normalize(x, xAxisMinimum, xAxisMaximum, -targetWidth / 2, w - targetWidth / 2);
+        int ny = normalize(y, yAxisMinimum, yAxisMaximum, -targetWidth / 2, h - targetHeight / 2);
         g.drawImage(target, nx, ny, null);
     }
 

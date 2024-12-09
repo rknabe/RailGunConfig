@@ -47,14 +47,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     }
 
     public MainForm() {
-        try {
-            //ImageIcon imageIcon = new ImageIcon(ClassLoader.getSystemResource("wheel55.png"));
-            //wheelImage = toBufferedImage(imageIcon.getImage());
-            //wheelIconLabel.setIcon(imageIcon);
-        } catch (Exception ex) {
-            logger.warning(ex.getMessage());
-        }
-
         axisPanelParent.add(axisPanel);
 
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
@@ -157,9 +149,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         short nyMax = (short) axisPanel.normalize(yMax, Short.MIN_VALUE, Short.MAX_VALUE, 0, 1023);
 
         boolean sent = device.setAxisLimits(nxMin, nxMax, nyMin, nyMax);
-        if (sent) {
-            System.out.println("sent");
-        } else {
+        if (!sent) {
             System.out.println("failed to send calibration settings");
         }
     }
@@ -378,5 +368,4 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
-
 }
