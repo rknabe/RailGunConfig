@@ -10,6 +10,8 @@ public final class SettingsDataReport extends DataReport {
     private final short yAxisMinimum;
     private final short yAxisMaximum;
     private final boolean autoRecoil;
+    private final short triggerRepeatDelay;
+    private final short triggerHoldTime;
 
     public SettingsDataReport(byte reportType, ByteBuffer buffer) {
         super(reportType);
@@ -22,6 +24,16 @@ public final class SettingsDataReport extends DataReport {
         yAxisMinimum = buffer.getShort();
         yAxisMaximum = buffer.getShort();
         autoRecoil = buffer.get() > 0;
+        triggerRepeatDelay = buffer.getShort();
+        triggerHoldTime = buffer.getShort();
+    }
+
+    public short getTriggerHoldTime() {
+        return triggerHoldTime;
+    }
+
+    public short getTriggerRepeatDelay() {
+        return triggerRepeatDelay;
     }
 
     public boolean isAutoRecoil() {

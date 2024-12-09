@@ -30,17 +30,17 @@ public class Device {
     public static final byte CMD_HEARTBEAT = 0;
     public static final byte CMD_SET_AXIS_LIMITS = 2;
     public static final byte CMD_SET_AUTO_RECOIL = 3;
+    public static final byte CMD_SET_TRIGGER_RATE = 4;
+    public static final byte CMD_SET_TRIGGER_HOLD = 5;
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
-    public static final byte CMD_GET_GAINS = 5;
     public static final byte CMD_GET_MISC = 6;
     public static final byte CMD_SET_RANGE = 10;
     public static final byte CMD_SET_AALIMITS = 11;
     public static final byte CMD_SET_AACENTER = 12;
     public static final byte CMD_SET_AADZ = 13;
     public static final byte CMD_SET_AAAUTOLIM = 14;
-    public static final byte CMD_SET_SHIFT_BTN = 15;
     public static final byte CMD_CENTER = 23;
     public static final byte CMD_WHEEL_LIMITS = 24;
     public static final byte CMD_WHEEL_CENTER = 25;
@@ -133,8 +133,13 @@ public class Device {
         return sendCommand(CMD_WHEEL_INVERT, state);
     }
 
-    public synchronized boolean setShiftButton(short buttonIndex) {
-        return sendCommand(CMD_SET_SHIFT_BTN, buttonIndex);
+    public synchronized boolean setTriggerRepeatRate(short rate) {
+        return sendCommand(CMD_SET_TRIGGER_RATE, rate);
+    }
+
+    public synchronized boolean setTriggerHoldTime(short time) {
+        System.out.println("sending trigger hold:" + time);
+        return sendCommand(CMD_SET_TRIGGER_HOLD, time);
     }
 
     public synchronized boolean setAxisLimits(short xMinValue, short xMaxValue, short yMinValue, short yMaxValue) {

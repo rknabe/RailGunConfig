@@ -2,47 +2,38 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.rkade.ButtonsPanel">
   <grid id="27dc6" binding="mainButtonPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="726" height="276"/>
+      <xy x="20" y="20" width="726" height="120"/>
     </constraints>
     <properties>
       <autoscrolls value="false"/>
-      <maximumSize width="400" height="240"/>
-      <minimumSize width="400" height="240"/>
+      <maximumSize width="400" height="120"/>
+      <minimumSize width="400" height="120"/>
       <name value="mainButtonPanel"/>
-      <preferredSize width="400" height="240"/>
+      <preferredSize width="400" height="120"/>
+      <requestFocusEnabled value="false"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="200ec" binding="bottomPanel" layout-manager="FlowLayout" hgap="2" vgap="5" flow-align="1">
-        <constraints border-constraint="Center"/>
-        <properties>
-          <maximumSize width="700" height="45"/>
-          <minimumSize width="700" height="45"/>
-          <opaque value="false"/>
-          <preferredSize width="700" height="45"/>
-        </properties>
-        <border type="none"/>
-        <children/>
-      </grid>
       <grid id="5f99" binding="topPanel" layout-manager="GridBagLayout">
         <constraints border-constraint="North"/>
         <properties>
           <autoscrolls value="false"/>
-          <maximumSize width="200" height="205"/>
-          <minimumSize width="200" height="205"/>
-          <preferredSize width="200" height="205"/>
+          <maximumSize width="200" height="120"/>
+          <minimumSize width="200" height="120"/>
+          <preferredSize width="200" height="120"/>
         </properties>
         <border type="none"/>
         <children>
           <component id="6b4a0" class="javax.swing.JButton" binding="button1">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <autoscrolls value="false"/>
               <enabled value="false"/>
               <horizontalAlignment value="0"/>
+              <maximumSize width="78" height="78"/>
               <minimumSize width="50" height="50"/>
               <preferredSize width="50" height="50"/>
               <selected value="false"/>
@@ -51,7 +42,7 @@
           </component>
           <component id="e6cb3" class="javax.swing.JButton" binding="button2">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -65,7 +56,7 @@
           </component>
           <component id="891bb" class="javax.swing.JButton" binding="button3">
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -80,7 +71,7 @@
           </component>
           <component id="f66a3" class="javax.swing.JButton" binding="button4">
             <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -95,7 +86,7 @@
           </component>
           <component id="f48d9" class="javax.swing.JButton" binding="button5">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -110,7 +101,7 @@
           </component>
           <component id="f92c8" class="javax.swing.JButton" binding="button6">
             <constraints>
-              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -125,7 +116,7 @@
           </component>
           <component id="ea70a" class="javax.swing.JButton" binding="button7">
             <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -140,7 +131,7 @@
           </component>
           <component id="4a55b" class="javax.swing.JButton" binding="button8">
             <constraints>
-              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
@@ -153,365 +144,13 @@
               <text value="8"/>
             </properties>
           </component>
-          <component id="809d1" class="javax.swing.JButton" binding="button16">
+          <component id="1494e" class="javax.swing.JLabel">
             <constraints>
-              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="16"/>
-            </properties>
-          </component>
-          <component id="5ad75" class="javax.swing.JButton" binding="button15">
-            <constraints>
-              <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="15"/>
-            </properties>
-          </component>
-          <component id="3c313" class="javax.swing.JButton" binding="button14">
-            <constraints>
-              <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="14"/>
-            </properties>
-          </component>
-          <component id="8f26" class="javax.swing.JButton" binding="button13">
-            <constraints>
-              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="13"/>
-              <toolTipText value=""/>
-            </properties>
-          </component>
-          <component id="94e58" class="javax.swing.JButton" binding="button12">
-            <constraints>
-              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="12"/>
-            </properties>
-          </component>
-          <component id="229ad" class="javax.swing.JButton" binding="button9">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="9"/>
-            </properties>
-          </component>
-          <component id="b6ed6" class="javax.swing.JButton" binding="button10">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="10"/>
-            </properties>
-          </component>
-          <component id="2946b" class="javax.swing.JButton" binding="button11">
-            <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="11"/>
-            </properties>
-          </component>
-          <component id="52097" class="javax.swing.JButton" binding="button17">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="17"/>
-            </properties>
-          </component>
-          <component id="9c460" class="javax.swing.JButton" binding="button25">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="25"/>
-            </properties>
-          </component>
-          <component id="e7de7" class="javax.swing.JButton" binding="button18">
-            <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="18"/>
-            </properties>
-          </component>
-          <component id="d226a" class="javax.swing.JButton" binding="button26">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="26"/>
-            </properties>
-          </component>
-          <component id="337f0" class="javax.swing.JButton" binding="button19">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="19"/>
-            </properties>
-          </component>
-          <component id="1ff12" class="javax.swing.JButton" binding="button27">
-            <constraints>
-              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="27"/>
-            </properties>
-          </component>
-          <component id="21f61" class="javax.swing.JButton" binding="button20">
-            <constraints>
-              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="20"/>
-            </properties>
-          </component>
-          <component id="52036" class="javax.swing.JButton" binding="button28">
-            <constraints>
-              <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="28"/>
-            </properties>
-          </component>
-          <component id="1f966" class="javax.swing.JButton" binding="button21">
-            <constraints>
-              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="21"/>
-            </properties>
-          </component>
-          <component id="1cba0" class="javax.swing.JButton" binding="button29">
-            <constraints>
-              <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="29"/>
-            </properties>
-          </component>
-          <component id="85a23" class="javax.swing.JButton" binding="button22">
-            <constraints>
-              <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="22"/>
-            </properties>
-          </component>
-          <component id="45f30" class="javax.swing.JButton" binding="button30">
-            <constraints>
-              <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="30"/>
-            </properties>
-          </component>
-          <component id="12c01" class="javax.swing.JButton" binding="button23">
-            <constraints>
-              <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="23"/>
-            </properties>
-          </component>
-          <component id="c95af" class="javax.swing.JButton" binding="button31">
-            <constraints>
-              <grid row="3" column="6" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="31"/>
-            </properties>
-          </component>
-          <component id="3e4a5" class="javax.swing.JButton" binding="button24">
-            <constraints>
-              <grid row="2" column="7" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="24"/>
-            </properties>
-          </component>
-          <component id="2c2ed" class="javax.swing.JButton" binding="button32">
-            <constraints>
-              <grid row="3" column="7" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-            <properties>
-              <autoscrolls value="false"/>
-              <enabled value="false"/>
-              <horizontalAlignment value="0"/>
-              <minimumSize width="50" height="50"/>
-              <preferredSize width="50" height="50"/>
-              <selected value="false"/>
-              <text value="32"/>
+              <text value="Buttons"/>
             </properties>
           </component>
         </children>

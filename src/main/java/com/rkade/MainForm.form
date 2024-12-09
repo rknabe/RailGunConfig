@@ -113,22 +113,70 @@
             </properties>
             <border type="bevel-lowered"/>
             <children>
-              <grid id="a1a7d" binding="buttonPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+              <grid id="a1a7d" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="South"/>
                 <properties/>
                 <border type="bevel-raised"/>
                 <children>
                   <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
-                    <constraints border-constraint="West"/>
+                    <constraints/>
                     <properties>
                       <text value="Calibrate"/>
                     </properties>
                   </component>
+                  <hspacer id="d9c7b">
+                    <constraints/>
+                  </hspacer>
                   <component id="80905" class="javax.swing.JCheckBox" binding="cbAutoRecoil">
-                    <constraints border-constraint="East"/>
+                    <constraints/>
                     <properties>
+                      <alignmentX value="0.0"/>
                       <horizontalAlignment value="4"/>
+                      <margin top="2" left="2" bottom="2" right="2"/>
                       <text value="Auto Recoil"/>
+                    </properties>
+                  </component>
+                  <hspacer id="874a9">
+                    <constraints/>
+                  </hspacer>
+                  <component id="ddae9" class="javax.swing.JLabel" binding="lblAutoTrigger">
+                    <constraints/>
+                    <properties>
+                      <labelFor value="56456"/>
+                      <text value="Auto-Trigger Speed (ms)"/>
+                      <toolTipText value="When &gt; 0, Holding the trigger will repeat trigger"/>
+                    </properties>
+                  </component>
+                  <component id="56456" class="javax.swing.JSpinner" binding="spAutoTriggerSpeed">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <maximumSize width="80" height="34"/>
+                      <minimumSize width="80" height="34"/>
+                      <name value=""/>
+                      <preferredSize width="80" height="34"/>
+                    </properties>
+                  </component>
+                  <hspacer id="7ddb">
+                    <constraints/>
+                  </hspacer>
+                  <component id="b86a9" class="javax.swing.JLabel" binding="lblTriggerHold">
+                    <constraints/>
+                    <properties>
+                      <labelFor value="4827b"/>
+                      <text value="Auto-Trigger Hold (ms)"/>
+                      <toolTipText value="When &gt; 0, Holding the trigger will repeat trigger"/>
+                    </properties>
+                  </component>
+                  <component id="4827b" class="javax.swing.JSpinner" binding="spTriggerHold">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <maximumSize width="80" height="34"/>
+                      <minimumSize width="80" height="34"/>
+                      <name value=""/>
+                      <preferredSize width="80" height="34"/>
+                      <toolTipText value="Amount of time to hold trigger for auto-fire, if zero, auto-fire disabled"/>
                     </properties>
                   </component>
                 </children>

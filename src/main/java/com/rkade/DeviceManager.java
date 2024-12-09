@@ -11,7 +11,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     private final static Logger logger = Logger.getLogger(DeviceManager.class.getName());
     private final static int LEONARDO_VENDOR_ID = 0x2341;
     private final static int LEONARDO_PRODUCT_ID = 0x8036;
-    private final static int OUTPUT_REPORT_DATA_LENGTH = 7;
+    private final static int OUTPUT_REPORT_DATA_LENGTH = 9;
     private final static int SLEEP_BETWEEN_OUTPUT_REPORT = 10;
     private final static byte AXIS_COUNT = 7;
     private final static List<DeviceListener> deviceListeners = Collections.synchronizedList(new ArrayList<>());
