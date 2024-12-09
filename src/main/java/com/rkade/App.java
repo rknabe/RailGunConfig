@@ -2,7 +2,6 @@ package com.rkade;
 
 import com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme;
 import org.apache.commons.cli.*;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -118,7 +117,6 @@ public class App {
         }
     }
 
-    @NotNull
     private static Options setupCommandLineOptions() {
         Options options = new Options();
 
