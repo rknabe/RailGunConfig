@@ -35,6 +35,7 @@ public class Device {
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
+    public static final byte CMD_RECOIL = 19;
     public static final byte CMD_GET_MISC = 6;
     public static final byte CMD_SET_RANGE = 10;
     public static final byte CMD_SET_AALIMITS = 11;
@@ -95,6 +96,10 @@ public class Device {
 
     public synchronized boolean setAutoRecoil(boolean state) {
         return sendCommand(CMD_SET_AUTO_RECOIL, state);
+    }
+
+    public synchronized boolean doRecoil(boolean state) {
+        return sendCommand(CMD_RECOIL, state);
     }
 
     public synchronized boolean setWheelCenter() {
