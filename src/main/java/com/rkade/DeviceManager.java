@@ -27,6 +27,12 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         new Thread(new OutputReportRunner()).start();
     }
 
+    private static void notifyListenersDeviceFound(Device device) {
+        for (DeviceListener deviceListener : deviceListeners) {
+            deviceListener.deviceFound(device);
+        }
+    }
+
     private static void notifyListenersDeviceAttached(Device device) {
         for (DeviceListener deviceListener : deviceListeners) {
             deviceListener.deviceAttached(device);
@@ -75,6 +81,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                             if (port.getVendorID() == LEONARDO_VENDOR_ID && port.getProductID() == LEONARDO_PRODUCT_ID) {
                                 device.setName(port.getDescriptivePortName());
                                 device.setPort(port);
+                                notifyListenersDeviceFound(device);
                                 return device;
                                 /*
                                 String version = device.readVersion();
@@ -203,10 +210,9 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                         if (!versionReported) {
                             //only need to do this once
                             getOutputReport(Device.CMD_GET_SETTINGS, (byte) 0, data);
-                        }
-                        else {
+                        } else {
                             //use this as heartbeat to check usb connections
-                           getOutputReport(Device.CMD_HEARTBEAT, (byte) 0, data);
+                            getOutputReport(Device.CMD_HEARTBEAT, (byte) 0, data);
                         }
 
                         //getOutputReport(Device.CMD_GET_STEER, (byte) 0, data);

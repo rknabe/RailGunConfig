@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 public class MainForm extends BaseForm implements DeviceListener, ActionListener, FocusListener, ChangeListener {
     private final static Logger logger = Logger.getLogger(MainForm.class.getName());
     private final AxisPanel axisPanel = new AxisPanel();
+    private final DefaultComboBoxModel<Device> deviceListModel = new DefaultComboBoxModel<>();
     private JPanel mainPanel;
     private JPanel bottomPanel;
     private JLabel deviceLabel;
@@ -34,6 +35,10 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JLabel lblAutoTrigger;
     private JSpinner spTriggerHold;
     private JLabel lblTriggerHold;
+    private JComboBox<Device> deviceList;
+    private JLabel ammoLabel;
+    private JTextField ammoText;
+    private JPanel gunPanel;
     private Device device = null;
     private volatile boolean isWaitingOnDevice = false;
     private volatile boolean isCalibrating = false;
@@ -50,7 +55,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         axisPanelParent.add(axisPanel);
 
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
-                spAutoTriggerSpeed, spTriggerHold);
+                spAutoTriggerSpeed, spTriggerHold, deviceList, ammoLabel, ammoText);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -67,6 +72,8 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         DefaultFormatter triggerHoldFormatter = (DefaultFormatter) triggerHoldField.getFormatter();
         triggerHoldFormatter.setCommitsOnValidEdit(true);
         spTriggerHold.setEditor(triggerHoldEditor);
+
+        deviceList.setModel(deviceListModel);
 
         //setupAxisPanels();
         // setupGainPanels();
@@ -199,6 +206,11 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     }
 
     @Override
+    public void deviceFound(Device device) {
+        deviceListModel.addElement(device);
+    }
+
+    @Override
     public void deviceAttached(Device device) {
         this.device = device;
         deviceLabel.setText(device.getName());
@@ -214,6 +226,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         this.device = null;
         setPanelEnabled(false);
         buttonsPanel.deviceDetached(device);
+        deviceListModel.removeElement(device);
     }
 
     @Override
@@ -238,6 +251,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     spTriggerHold.setValue(settings.getTriggerHoldTime());
                 }
                 case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
+                case GunDataReport gunData -> ammoText.setText(String.valueOf(gunData.getAmmoCount()));
                 default -> {
                 }
             }

@@ -41,6 +41,11 @@ public class ButtonsPanel extends BaseForm implements DeviceListener, ActionList
     }
 
     @Override
+    public void deviceFound(Device device) {
+
+    }
+
+    @Override
     public void deviceAttached(Device device) {
         this.device = device;
         setPanelEnabled(true);

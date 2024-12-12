@@ -81,6 +81,11 @@ public class Device {
         this.hidPath = path;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public synchronized boolean saveSettings() {
         return sendCommand(CMD_EESAVE);
     }

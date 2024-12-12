@@ -2,11 +2,11 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.rkade.MainForm">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="778" height="826"/>
+      <xy x="20" y="20" width="778" height="685"/>
     </constraints>
     <properties>
       <minimumSize width="700" height="400"/>
-      <preferredSize width="700" height="800"/>
+      <preferredSize width="700" height="700"/>
     </properties>
     <border type="none"/>
     <children>
@@ -14,19 +14,31 @@
         <constraints border-constraint="South"/>
         <properties>
           <autoscrolls value="false"/>
-          <maximumSize width="1000" height="75"/>
-          <minimumSize width="700" height="75"/>
-          <preferredSize width="700" height="75"/>
+          <maximumSize width="1000" height="100"/>
+          <minimumSize width="700" height="83"/>
+          <preferredSize width="700" height="83"/>
         </properties>
         <border type="bevel-raised"/>
         <children>
-          <grid id="6d238" layout-manager="FlowLayout" hgap="4" vgap="4" flow-align="0">
+          <grid id="6d238" layout-manager="FlowLayout" hgap="4" vgap="4" flow-align="1">
             <constraints/>
             <properties>
-              <preferredSize width="600" height="32"/>
+              <minimumSize width="780" height="40"/>
+              <preferredSize width="780" height="35"/>
+              <verifyInputWhenFocusTarget value="false"/>
             </properties>
             <border type="etched"/>
             <children>
+              <component id="d1d5f" class="javax.swing.JComboBox" binding="deviceList">
+                <constraints/>
+                <properties>
+                  <minimumSize width="250" height="28"/>
+                  <preferredSize width="250" height="28"/>
+                </properties>
+              </component>
+              <hspacer id="c7984">
+                <constraints/>
+              </hspacer>
               <component id="6cb29" class="javax.swing.JLabel" binding="deviceLabel">
                 <constraints/>
                 <properties>
@@ -101,8 +113,8 @@
       <grid id="d7650" binding="northPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="North"/>
         <properties>
-          <minimumSize width="400" height="750"/>
-          <preferredSize width="400" height="750"/>
+          <minimumSize width="400" height="600"/>
+          <preferredSize width="400" height="600"/>
         </properties>
         <border type="none"/>
         <children>
@@ -115,7 +127,10 @@
             <children>
               <grid id="a1a7d" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="South"/>
-                <properties/>
+                <properties>
+                  <minimumSize width="736" height="100"/>
+                  <preferredSize width="736" height="100"/>
+                </properties>
                 <border type="bevel-raised"/>
                 <children>
                   <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
@@ -179,6 +194,33 @@
                       <toolTipText value="Amount of time to hold trigger for auto-fire, if zero, auto-fire disabled"/>
                     </properties>
                   </component>
+                  <grid id="a9178" binding="gunPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                    <constraints/>
+                    <properties>
+                      <minimumSize width="736" height="50"/>
+                      <preferredSize width="736" height="50"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="f16dc" class="javax.swing.JLabel" binding="ammoLabel">
+                        <constraints/>
+                        <properties>
+                          <labelFor value="ce4ea"/>
+                          <text value="Ammo:"/>
+                        </properties>
+                      </component>
+                      <component id="ce4ea" class="javax.swing.JTextField" binding="ammoText">
+                        <constraints/>
+                        <properties>
+                          <editable value="false"/>
+                          <maximumSize width="50" height="30"/>
+                          <minimumSize width="50" height="30"/>
+                          <preferredSize width="50" height="30"/>
+                          <text value=" 0"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
                 </children>
               </grid>
             </children>

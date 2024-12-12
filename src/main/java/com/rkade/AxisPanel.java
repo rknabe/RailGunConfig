@@ -79,6 +79,11 @@ public class AxisPanel extends JPanel implements DeviceListener, ActionListener,
     }
 
     @Override
+    public void deviceFound(Device device) {
+
+    }
+
+    @Override
     public void deviceAttached(Device device) {
 
     }
