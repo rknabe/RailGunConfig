@@ -3,8 +3,8 @@ package com.rkade;
 import java.nio.ByteBuffer;
 
 public final class SettingsDataReport extends DataReport {
-    private final String id; //6 bytes
-    private final String version; //12 bytes;
+    private final String deviceType;
+    private final String deviceVersion;
     private final short xAxisMinimum;
     private final short xAxisMaximum;
     private final short yAxisMinimum;
@@ -17,8 +17,8 @@ public final class SettingsDataReport extends DataReport {
         super(reportType);
         byte cmd = buffer.get();
         short args = buffer.getShort();
-        id = getString(buffer, 10);
-        version = getString(buffer, 6);
+        deviceType = getString(buffer, 10).trim();
+        deviceVersion = getString(buffer, 6).trim();
         xAxisMinimum = buffer.getShort();
         xAxisMaximum = buffer.getShort();
         yAxisMinimum = buffer.getShort();
@@ -56,11 +56,11 @@ public final class SettingsDataReport extends DataReport {
         return yAxisMaximum;
     }
 
-    public String getId() {
-        return id;
+    public String getDeviceType() {
+        return deviceType;
     }
 
-    public String getVersion() {
-        return version;
+    public String getDeviceVersion() {
+        return deviceVersion;
     }
 }

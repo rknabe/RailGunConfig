@@ -1,7 +1,8 @@
 package com.rkade;
 
 import com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ public class App {
         boolean showGui = true;
         System.setProperty("fazecast.jSerialComm.appid", "com.rkade.RKadeGunConfig");
 
+        /*
         Options options = setupCommandLineOptions();
 
         try {
@@ -84,6 +86,7 @@ public class App {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        */
 
         if (showGui) {
             try {

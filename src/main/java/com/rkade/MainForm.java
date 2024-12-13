@@ -241,7 +241,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 case ButtonsDataReport buttonsData -> buttonsPanel.deviceUpdated(device, status, buttonsData);
                 case SettingsDataReport settings -> {
                     lastSettings = settings;
-                    firmwareLabel.setText(settings.getId() + ":" + settings.getVersion());
+                    firmwareLabel.setText(settings.getDeviceType() + ":" + settings.getDeviceVersion());
                     axisPanel.setXAxisMinimum(settings.getXAxisMinimum());
                     axisPanel.setXAxisMaximum(settings.getXAxisMaximum());
                     axisPanel.setYAxisMinimum(settings.getYAxisMinimum());
