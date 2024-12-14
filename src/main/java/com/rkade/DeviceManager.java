@@ -1,10 +1,13 @@
 package com.rkade;
 
 import com.fazecast.jSerialComm.SerialPort;
+import purejavahidapi.*;
+
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Logger;
-import purejavahidapi.*;
 
 public final class DeviceManager implements InputReportListener, DeviceRemovalListener {
     private final static Logger logger = Logger.getLogger(DeviceManager.class.getName());
@@ -21,7 +24,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     public DeviceManager(DeviceListener listener) {
         addDeviceListener(listener);
         //new Thread(new ConnectionRunner()).start();
-        new Thread(new OutputReportRunner()).start();
+        //new Thread(new OutputReportRunner()).start();
         scanDevices();
     }
 
@@ -44,8 +47,10 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     }
 
     private void notifyListenersDeviceUpdated(Device device, String status, DataReport report) {
-        for (DeviceListener deviceListener : deviceListeners) {
-            deviceListener.deviceUpdated(device, status, report);
+        if (report != null) {
+            for (DeviceListener deviceListener : deviceListeners) {
+                deviceListener.deviceUpdated(device, status, report);
+            }
         }
     }
 
@@ -139,25 +144,14 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         if (id == Device.DATA_REPORT_ID || id == Device.CMD_GET_VER) {
             List<DataReport> reports = DataReportFactory.create(id, data);
             for (DataReport report : reports) {
-                if (report instanceof SettingsDataReport) {
-                    SettingsDataReport settings = (SettingsDataReport) report;
-                    //if (versionReported) {
-                    //    continue;
-                    //}
-                    //versionReported = true;
+                if (report instanceof SettingsDataReport settings) {
+                    if (versionReported) {
+                        continue;
+                    }
+                    versionReported = true;
                     if (Device.FIRMWARE_TYPE.equalsIgnoreCase(settings.getDeviceType())) {
                         Device device = getDevice(hidDevice);
-                        SerialPort[] ports = SerialPort.getCommPorts();
-                        for (SerialPort port : ports) {
-                            if (port.getVendorID() == LEONARDO_VENDOR_ID && port.getProductID() == LEONARDO_PRODUCT_ID) {
-                                port.openPort();
-                                device.setName(port.getDescriptivePortName());
-                                device.setPort(port);
-                            }
-                        }
 
-
-                        notifyListenersDeviceFound(device);
                     }
                 } else {
                     notifyListenersDeviceUpdated(getDevice(hidDevice), null, report);
@@ -180,18 +174,30 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         getOutputReport(openedDevice, dataType, dataIndex, data);
     }
 
+    private String getString(ByteBuffer buffer, int bytes) {
+        byte[] newArray = new byte[bytes];
+        for (int i = 0; i < bytes; i++) {
+            newArray[i] = buffer.get();
+        }
+        return new String(newArray, StandardCharsets.ISO_8859_1);
+    }
+
     public void scanDevices() {
         byte[] reportData = new byte[OUTPUT_REPORT_DATA_LENGTH];
         List<HidDeviceInfo> devList = PureJavaHidApi.enumerateDevices();
         for (HidDeviceInfo info : devList) {
             if (info.getVendorId() == LEONARDO_VENDOR_ID && info.getProductId() == LEONARDO_PRODUCT_ID) {
                 try {
-                    HidDevice device = PureJavaHidApi.openDevice(info);
-                    if (device != null) {
-                        device.open();
-                        device.setDeviceRemovalListener(this);
-                        device.setInputReportListener(this);
-                        getOutputReport(device, Device.CMD_GET_SETTINGS, (byte) 0, reportData);
+                    openedDevice = PureJavaHidApi.openDevice(info);
+                    if (openedDevice != null) {
+                        openedDevice.open();
+                        Device device = getDevice(openedDevice);
+                        notifyListenersDeviceFound(device);
+                        notifyListenersDeviceUpdated(device, "Opened", null);
+                        openedDevice.setDeviceRemovalListener(DeviceManager.this);
+                        openedDevice.setInputReportListener(DeviceManager.this);
+                        notifyListenersDeviceAttached(device);
+                        getOutputReport(openedDevice, Device.CMD_GET_SETTINGS, (byte) 0, reportData);
                     }
                 } catch (IOException ex) {
                     logger.warning(ex.getMessage());
