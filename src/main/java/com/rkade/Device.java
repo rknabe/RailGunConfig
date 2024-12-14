@@ -4,6 +4,9 @@ import com.fazecast.jSerialComm.SerialPort;
 import purejavahidapi.HidDevice;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
@@ -17,14 +20,15 @@ public class Device {
     public static final byte CMD_SET_AUTO_RECOIL = 3;
     public static final byte CMD_SET_TRIGGER_RATE = 4;
     public static final byte CMD_SET_TRIGGER_HOLD = 5;
+    public static final byte CMD_SET_UNIQUE_ID = 6;
     public static final byte CMD_SET_AXIS_LIMITS = 2;
     public static final byte CMD_EESAVE = 16;
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
     public static final byte CMD_RECOIL = 19;
+    public static final String SERIAL_CMD_GET_UNIQUE_ID = "getUniqueId";
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
     private static final Logger logger = Logger.getLogger(Device.class.getName());
-    private static final int WAIT_AFTER_EFFECT_UPDATE = 5;
     private final String hidPath;
     private final HidDevice hidDevice;
     private String name;
@@ -36,6 +40,38 @@ public class Device {
         this.hidDevice = hidDevice;
         this.name = hidDevice.getHidDeviceInfo().getProductString();
         this.hidPath = path;
+    }
+
+    public static synchronized String readUniqueId(SerialPort port) {
+        try {
+            boolean isOpen = port.isOpen();
+            if (!isOpen) {
+                port.setBaudRate(9600);
+                port.setParity(0);
+                port.setNumStopBits(1);
+                port.setNumDataBits(8);
+                isOpen = port.openPort(500);
+            }
+            if (isOpen) {
+                byte[] value = SERIAL_CMD_GET_UNIQUE_ID.getBytes(StandardCharsets.US_ASCII);
+                port.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING | SerialPort.TIMEOUT_WRITE_BLOCKING, 100, 100);
+                int ret = port.writeBytes(value, value.length);
+                if (ret > 0) {
+                    InputStream is = port.getInputStream();
+                    InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
+                    BufferedReader bufferedReader = new BufferedReader(streamReader);
+                    return bufferedReader.readLine();
+                }
+                return null;
+            }
+        } catch (Exception ex) {
+            logger.warning(ex.getMessage());
+        } finally {
+            if (port != null && port.isOpen()) {
+                port.closePort();
+            }
+        }
+        return null;
     }
 
     @Override
@@ -72,26 +108,11 @@ public class Device {
     }
 
     public synchronized boolean setTriggerHoldTime(short time) {
-        System.out.println("sending trigger hold:" + time);
         return sendCommand(CMD_SET_TRIGGER_HOLD, time);
     }
 
-    public synchronized boolean writeTextToPort(String text) {
-        boolean isOpen = port.isOpen();
-        if (!isOpen) {
-            port.setBaudRate(9600);
-            port.setParity(0);
-            port.setNumStopBits(1);
-            port.setNumDataBits(8);
-            isOpen = port.openPort(500);
-        }
-        if (isOpen) {
-            byte[] value = text.getBytes(StandardCharsets.US_ASCII);
-            int ret = port.writeBytes(value, value.length);
-            port.closePort();
-            return (ret > 0);
-        }
-        return false;
+    public synchronized boolean setUniqueId(short id) {
+        return sendCommand(CMD_SET_UNIQUE_ID, id);
     }
 
     public void setPort(SerialPort port) {
