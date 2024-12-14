@@ -29,17 +29,14 @@ public class Device {
     public static final String SERIAL_CMD_GET_UNIQUE_ID = "getUniqueId";
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
     private static final Logger logger = Logger.getLogger(Device.class.getName());
-    private final String hidPath;
     private final HidDevice hidDevice;
     private String name;
-    private SerialPort port;
     private String firmwareType;
     private String firmwareVersion;
 
-    public Device(HidDevice hidDevice, String path) {
+    public Device(HidDevice hidDevice) {
         this.hidDevice = hidDevice;
         this.name = hidDevice.getHidDeviceInfo().getProductString();
-        this.hidPath = path;
     }
 
     public static synchronized String readUniqueId(SerialPort port) {
@@ -115,10 +112,6 @@ public class Device {
         return sendCommand(CMD_SET_UNIQUE_ID, id);
     }
 
-    public void setPort(SerialPort port) {
-        this.port = port;
-    }
-
     private boolean sendCommand(byte command) {
         return sendCommand(command, (short) 0, (short) 0, (short) 0);
     }
@@ -168,6 +161,18 @@ public class Device {
         };
         worker.execute();
         return status[0];
+    }
+
+    public HidDevice getHidDevice() {
+        return hidDevice;
+    }
+
+    public void setFirmwareType(String firmwareType) {
+        this.firmwareType = firmwareType;
+    }
+
+    public void setFirmwareVersion(String firmwareVersion) {
+        this.firmwareVersion = firmwareVersion;
     }
 
     private byte getFirstByte(short value) {

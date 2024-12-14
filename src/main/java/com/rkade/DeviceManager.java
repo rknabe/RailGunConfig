@@ -58,7 +58,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
 
     private Device getDevice(HidDevice hidDevice) {
         String path = getHidPath(hidDevice);
-        return deviceMap.computeIfAbsent(path, k -> new Device(hidDevice, path));
+        return deviceMap.computeIfAbsent(path, k -> new Device(hidDevice));
     }
 
     private String getHidPath(HidDevice device) {
@@ -105,12 +105,12 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                         continue;
                     }
                     if (Device.FIRMWARE_TYPE.equalsIgnoreCase(settings.getDeviceType())) {
+                        hidDevice.setInputReportListener(null);  //stop listening until connected
                         Device device = getDevice(hidDevice);
                         device.setName(settings.getDeviceType());
                         long ms = System.currentTimeMillis();
                         short uniqueId = (short) (ms & 0x000000000000FFFF);
                         uniqueId = (short) Math.abs(uniqueId);
-                        System.out.println("UniqueId:" + uniqueId);
                         boolean ret = device.setUniqueId(uniqueId);
                         sleep(20);
                         if (ret) {
@@ -119,6 +119,8 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                                 device.setName(settings.getDeviceType() + " (" + port.getSystemPortName()+ ")");
                             }
                         }
+                        device.setFirmwareType(settings.getDeviceType());
+                        device.setFirmwareType(settings.getDeviceVersion());
                         //hidDevice.setDeviceRemovalListener(DeviceManager.this);
                         //hidDevice.setInputReportListener(DeviceManager.this);
                         notifyListenersDeviceFound(getDevice(hidDevice));
@@ -130,6 +132,11 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                 }
             }
         }
+    }
+
+    public boolean connectDevice(Device device) {
+        //device.g.setInputReportListener(null);  //stop listening until connected
+        return false;
     }
 
     private SerialPort findMatchingCommPort(short uniqueId) {
