@@ -104,6 +104,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                     if (prevSettings != null) {//not first pass
                         continue;
                     }
+                    deviceSettings.put(hidDevice, settings);
                     if (Device.FIRMWARE_TYPE.equalsIgnoreCase(settings.getDeviceType())) {
                         hidDevice.setInputReportListener(null);  //stop listening until connected
                         Device device = getDevice(hidDevice);
@@ -116,16 +117,12 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                         if (ret) {
                             SerialPort port = findMatchingCommPort(uniqueId);
                             if (port != null) {
-                                device.setName(settings.getDeviceType() + " (" + port.getSystemPortName()+ ")");
+                                device.setName(settings.getDeviceType() + " (" + port.getSystemPortName() + ")");
                             }
                         }
                         device.setFirmwareType(settings.getDeviceType());
-                        device.setFirmwareType(settings.getDeviceVersion());
-                        //hidDevice.setDeviceRemovalListener(DeviceManager.this);
-                        //hidDevice.setInputReportListener(DeviceManager.this);
+                        device.setFirmwareVersion(settings.getDeviceVersion());
                         notifyListenersDeviceFound(getDevice(hidDevice));
-                        //notifyListenersDeviceUpdated(device, "Opened", null);
-                        //notifyListenersDeviceAttached(device);
                     }
                 } else {
                     notifyListenersDeviceUpdated(getDevice(hidDevice), null, report);
@@ -135,7 +132,20 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     }
 
     public boolean connectDevice(Device device) {
-        //device.g.setInputReportListener(null);  //stop listening until connected
+        if (device != null) {
+            if (openedDevice != null) {
+                openedDevice.setDeviceRemovalListener(null);
+                openedDevice.setDeviceRemovalListener(null);
+                openedDevice.close();
+            }
+            HidDevice hidDevice = device.getHidDevice();
+            openedDevice = hidDevice;
+            hidDevice.setDeviceRemovalListener(DeviceManager.this);
+            notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(hidDevice));
+            notifyListenersDeviceAttached(device);
+            hidDevice.setInputReportListener(DeviceManager.this);
+            return true;
+        }
         return false;
     }
 
@@ -164,7 +174,6 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         if (ret <= 0) {
             throw new IOException("Device returned error for dataType:" + dataType + " dataIndex:" + dataIndex);
         }
-        //sleep(SLEEP_BETWEEN_OUTPUT_REPORT);
     }
 
     public void getOutputReport(byte dataType, byte dataIndex, byte[] data) throws IOException {

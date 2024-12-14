@@ -113,6 +113,7 @@ public class App {
                     frame.setVisible(true);
 
                     deviceManager = new DeviceManager(mainForm);
+                    mainForm.setDeviceManager(deviceManager);
                 } catch (Exception ex) {
                     logger.warning(ex.getMessage());
                 }

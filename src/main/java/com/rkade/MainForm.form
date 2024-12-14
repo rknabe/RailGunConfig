@@ -20,11 +20,11 @@
         </properties>
         <border type="bevel-raised"/>
         <children>
-          <grid id="6d238" layout-manager="FlowLayout" hgap="4" vgap="4" flow-align="1">
+          <grid id="6d238" binding="devicePanel" layout-manager="FlowLayout" hgap="4" vgap="4" flow-align="1">
             <constraints/>
             <properties>
               <minimumSize width="780" height="40"/>
-              <preferredSize width="780" height="35"/>
+              <preferredSize width="780" height="40"/>
               <verifyInputWhenFocusTarget value="false"/>
             </properties>
             <border type="etched"/>
@@ -32,34 +32,15 @@
               <component id="d1d5f" class="javax.swing.JComboBox" binding="deviceList">
                 <constraints/>
                 <properties>
-                  <minimumSize width="250" height="28"/>
-                  <preferredSize width="250" height="28"/>
+                  <actionCommand value="deviceListChanged"/>
+                  <minimumSize width="200" height="34"/>
+                  <preferredSize width="200" height="34"/>
                 </properties>
               </component>
-              <hspacer id="c7984">
-                <constraints/>
-              </hspacer>
-              <component id="6cb29" class="javax.swing.JLabel" binding="deviceLabel">
+              <component id="e1af6" class="javax.swing.JButton" binding="btnConnect">
                 <constraints/>
                 <properties>
-                  <enabled value="true"/>
-                  <horizontalAlignment value="2"/>
-                  <maximumSize width="175" height="20"/>
-                  <minimumSize width="175" height="20"/>
-                  <preferredSize width="175" height="20"/>
-                  <text value="Device"/>
-                </properties>
-              </component>
-              <component id="bcaa2" class="javax.swing.JLabel" binding="firmwareLabel">
-                <constraints/>
-                <properties>
-                  <enabled value="true"/>
-                  <focusable value="false"/>
-                  <horizontalAlignment value="0"/>
-                  <maximumSize width="110" height="20"/>
-                  <minimumSize width="110" height="20"/>
-                  <preferredSize width="110" height="20"/>
-                  <text value="Firmware"/>
+                  <text value="Connect"/>
                 </properties>
               </component>
               <component id="ea116" class="javax.swing.JLabel" binding="statusLabel">
@@ -71,7 +52,19 @@
                   <minimumSize width="130" height="20"/>
                   <preferredSize width="130" height="20"/>
                   <requestFocusEnabled value="true"/>
-                  <text value="Device Not Found..."/>
+                  <text value="Scanning..."/>
+                </properties>
+              </component>
+              <component id="bcaa2" class="javax.swing.JLabel" binding="firmwareLabel">
+                <constraints/>
+                <properties>
+                  <enabled value="true"/>
+                  <focusable value="false"/>
+                  <horizontalAlignment value="0"/>
+                  <maximumSize width="110" height="20"/>
+                  <minimumSize width="110" height="20"/>
+                  <preferredSize width="110" height="20"/>
+                  <text value="Firmware:"/>
                 </properties>
               </component>
             </children>
@@ -101,7 +94,7 @@
             <constraints/>
             <properties>
               <actionCommand value="saveSettings"/>
-              <horizontalAlignment value="4"/>
+              <horizontalAlignment value="0"/>
               <maximumSize width="196" height="30"/>
               <minimumSize width="196" height="30"/>
               <preferredSize width="196" height="30"/>
@@ -136,6 +129,9 @@
                   <component id="949e6" class="javax.swing.JButton" binding="btnCalibrate">
                     <constraints/>
                     <properties>
+                      <maximumSize width="85" height="34"/>
+                      <minimumSize width="85" height="34"/>
+                      <preferredSize width="85" height="34"/>
                       <text value="Calibrate"/>
                     </properties>
                   </component>
