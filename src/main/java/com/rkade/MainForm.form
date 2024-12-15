@@ -211,7 +211,9 @@
                       <component id="ce4ea" class="javax.swing.JTextField" binding="ammoText">
                         <constraints/>
                         <properties>
+                          <autoscrolls value="false"/>
                           <editable value="false"/>
+                          <enabled value="false"/>
                           <maximumSize width="50" height="30"/>
                           <minimumSize width="50" height="30"/>
                           <preferredSize width="50" height="30"/>

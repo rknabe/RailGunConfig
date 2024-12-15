@@ -16,7 +16,6 @@ public class App {
     public static final String CL_PARAM_AUTO_CENTER = "autocenter";
     public static final String CL_PARAM_CENTER = "center";
     public static final String CL_PARAM_HELP = "help";
-    private static DeviceManager deviceManager;
 
     public static void main(String[] args) {
         boolean showGui = true;
@@ -112,8 +111,7 @@ public class App {
                     frame.setLocationRelativeTo(null);
                     frame.setVisible(true);
 
-                    deviceManager = new DeviceManager(mainForm);
-                    mainForm.setDeviceManager(deviceManager);
+                    mainForm.setDeviceManager(new DeviceManager(mainForm));
                 } catch (Exception ex) {
                     logger.warning(ex.getMessage());
                 }

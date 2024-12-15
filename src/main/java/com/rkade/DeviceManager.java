@@ -17,8 +17,10 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     private final static List<DeviceListener> deviceListeners = Collections.synchronizedList(new ArrayList<>());
     private final static Map<String, Device> deviceMap = Collections.synchronizedMap(new HashMap<>());
     private final static Map<Device, SettingsDataReport> deviceSettings = Collections.synchronizedMap(new HashMap<>());
-    private static HidDevice openedDevice = null;
+    private final static List<HidDeviceInfo> devList = Collections.synchronizedList(new ArrayList<>());
     private static final Random random = new Random();
+    private static final Comparator<HidDeviceInfo> hidDeviceInfoComparator = (a, b) -> a.getPath().compareTo(b.getPath());
+    private static HidDevice openedDevice = null;
 
     public DeviceManager(DeviceListener listener) {
         addDeviceListener(listener);
@@ -126,24 +128,6 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         }
     }
 
-    public boolean connectDevice(Device device) {
-        if (device != null) {
-            if (openedDevice != null) {
-                openedDevice.setDeviceRemovalListener(null);
-                openedDevice.setInputReportListener(null);
-                closeDevice(openedDevice);
-            }
-            HidDevice hidDevice = device.getHidDevice();
-            openedDevice = hidDevice;
-            hidDevice.setDeviceRemovalListener(DeviceManager.this);
-            hidDevice.setInputReportListener(DeviceManager.this);
-            notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(device));
-            notifyListenersDeviceAttached(device);
-            return true;
-        }
-        return false;
-    }
-
     private void closeDevice(HidDevice hidDevice) {
         try {
             hidDevice.close();
@@ -190,23 +174,83 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         return new String(newArray, StandardCharsets.ISO_8859_1);
     }
 
-    public void scanDevices() {
+    public boolean connectDevice(Device device) {
+        if (device != null) {
+            if (openedDevice != null) {
+                openedDevice.setDeviceRemovalListener(null);
+                openedDevice.setInputReportListener(null);
+                closeDevice(openedDevice);
+            }
+            HidDevice hidDevice = device.getHidDevice();
+            openedDevice = hidDevice;
+            hidDevice.setDeviceRemovalListener(DeviceManager.this);
+            hidDevice.setInputReportListener(DeviceManager.this);
+            notifyListenersDeviceUpdated(device, "Attached", deviceSettings.get(device));
+            notifyListenersDeviceAttached(device);
+            return true;
+        }
+        return false;
+    }
+
+    public synchronized void scanDevices() {
         byte[] reportData = new byte[OUTPUT_REPORT_DATA_LENGTH];
-        List<HidDeviceInfo> devList = PureJavaHidApi.enumerateDevices();
+        devList.clear();
+        devList.addAll(filterToArduinos(PureJavaHidApi.enumerateDevices()));
         for (HidDeviceInfo info : devList) {
-            if (info.getVendorId() == LEONARDO_VENDOR_ID && info.getProductId() == LEONARDO_PRODUCT_ID) {
-                try {
-                    HidDevice openedDevice = PureJavaHidApi.openDevice(info);
-                    if (openedDevice != null) {
-                        openedDevice.open();
-                        openedDevice.setInputReportListener(DeviceManager.this);
-                        getOutputReport(openedDevice, Device.CMD_GET_SETTINGS, (byte) 0, reportData);
-                    }
-                } catch (Exception ex) {
-                    logger.warning(ex.getMessage());
+            try {
+                HidDevice openedDevice = PureJavaHidApi.openDevice(info);
+                if (openedDevice != null) {
+                    openedDevice.open();
+                    openedDevice.setInputReportListener(DeviceManager.this);
+                    getOutputReport(openedDevice, Device.CMD_GET_SETTINGS, (byte) 0, reportData);
                 }
+            } catch (Exception ex) {
+                logger.warning(ex.getMessage());
             }
         }
+    }
+
+    private List<HidDeviceInfo> filterToArduinos(List<HidDeviceInfo> allDevices) {
+        List<HidDeviceInfo> arduinos = new ArrayList<>();
+        for (HidDeviceInfo info : allDevices) {
+            if (info.getVendorId() == LEONARDO_VENDOR_ID && info.getProductId() == LEONARDO_PRODUCT_ID) {
+                arduinos.add(info);
+            }
+        }
+        return arduinos;
+    }
+
+    private boolean devicesChanged() {
+        List<HidDeviceInfo> currentDevList = filterToArduinos(PureJavaHidApi.enumerateDevices());
+        HashSet<DeviceInfo> currentDevices = new HashSet<>();
+        HashSet<DeviceInfo> previousDevices = new HashSet<>();
+        for (HidDeviceInfo hidDeviceInfo : currentDevList) {
+            currentDevices.add(new DeviceInfo(hidDeviceInfo));
+        }
+        for (HidDeviceInfo hidDeviceInfo : devList) {
+            previousDevices.add(new DeviceInfo(hidDeviceInfo));
+        }
+
+        HashSet<DeviceInfo> removedDevices = new HashSet<>(previousDevices);
+        HashSet<DeviceInfo> addedDevices = new HashSet<>(currentDevices);
+        removedDevices.removeAll(currentDevices);
+        addedDevices.removeAll(previousDevices);  //this is now added devices
+
+        for (DeviceInfo info : removedDevices) {
+            Device device = deviceMap.get(info.getPath());
+            if (device != null) {
+                onDeviceRemoval(device.getHidDevice());
+            }
+        }
+
+        if (!removedDevices.isEmpty()) {
+            return true;
+        }
+        if (!addedDevices.isEmpty()) {
+            return true;
+        }
+
+        return false;
     }
 
     private final class ConnectionChecker implements Runnable {
@@ -215,30 +259,11 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
             int failCount = 0;
             byte[] data = new byte[OUTPUT_REPORT_DATA_LENGTH];
             while (true) {
-                scanDevices();
-                if (openedDevice != null) {
-                    try {
-                        //if (! (deviceSettings.get(openedDevice) == null)) {
-                        //only need to do this once
-                        // getOutputReport(Device.CMD_GET_SETTINGS, (byte) 0, data);
-                        //} else {
-                        //use this as heartbeat to check usb connections
-                        getOutputReport(Device.CMD_HEARTBEAT, (byte) 0, data);
-                        //}
-                        failCount = 0;
-                        sleep(2000);
-                    } catch (IOException ex) {
-                        ++failCount;
-                        if (failCount > 3) {
-                            onDeviceRemoval(openedDevice);
-                        }
-                        sleep(500);
-                        logger.warning(ex.getMessage());
-                    }
-                } else {
-                    sleep(2000);
-                    //scanDevices();
+                if (devicesChanged()) {
+                    System.out.println("device change");
+                    scanDevices();
                 }
+                sleep(2000);
             }
         }
     }

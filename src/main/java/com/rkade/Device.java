@@ -30,6 +30,7 @@ public class Device {
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
     private static final Logger logger = Logger.getLogger(Device.class.getName());
     private final HidDevice hidDevice;
+    private final String path;
     private String name;
     private String firmwareType;
     private String firmwareVersion;
@@ -37,6 +38,7 @@ public class Device {
     public Device(HidDevice hidDevice) {
         this.hidDevice = hidDevice;
         this.name = hidDevice.getHidDeviceInfo().getProductString();
+        this.path = hidDevice.getHidDeviceInfo().getPath();
     }
 
     public static synchronized String readUniqueId(SerialPort port) {
@@ -167,14 +169,6 @@ public class Device {
         return hidDevice;
     }
 
-    public void setFirmwareType(String firmwareType) {
-        this.firmwareType = firmwareType;
-    }
-
-    public void setFirmwareVersion(String firmwareVersion) {
-        this.firmwareVersion = firmwareVersion;
-    }
-
     private byte getFirstByte(short value) {
         return (byte) (value & 0xff);
     }
@@ -195,7 +189,15 @@ public class Device {
         return firmwareType;
     }
 
+    public void setFirmwareType(String firmwareType) {
+        this.firmwareType = firmwareType;
+    }
+
     public String getFirmwareVersion() {
         return firmwareVersion;
+    }
+
+    public void setFirmwareVersion(String firmwareVersion) {
+        this.firmwareVersion = firmwareVersion;
     }
 }
