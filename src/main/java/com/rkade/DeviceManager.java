@@ -17,16 +17,12 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     private final static List<DeviceListener> deviceListeners = Collections.synchronizedList(new ArrayList<>());
     private final static Map<String, Device> deviceMap = Collections.synchronizedMap(new HashMap<>());
     private final static Map<HidDevice, SettingsDataReport> deviceSettings = Collections.synchronizedMap(new HashMap<>());
-    //private static volatile boolean deviceAttached = false;
-    //private static volatile boolean versionReported = false;
-    //private static volatile HidDeviceInfo deviceInfo = null;
     private static HidDevice openedDevice = null;
 
     public DeviceManager(DeviceListener listener) {
         addDeviceListener(listener);
         SerialPort.autoCleanupAtShutdown();
-        //new Thread(new ConnectionRunner()).start();
-        //new Thread(new OutputReportRunner()).start();
+        new Thread(new ConnectionChecker()).start();
         scanDevices();
     }
 
@@ -87,11 +83,11 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         //deviceAttached = false;
         //versionReported = false;
         //deviceInfo = null;
-        //openedDevice = null;
         Device device = getDevice(hidDevice);
         deviceMap.remove(getHidPath(hidDevice));
         deviceSettings.remove(hidDevice);
         notifyListenersDeviceDetached(device);
+        openedDevice = null;
     }
 
     @Override
@@ -207,29 +203,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         }
     }
 
-    /*
-    private final class ConnectionRunner implements Runnable {
-        @Override
-        public void run() {
-            while (true) {
-                if (!deviceAttached) {
-                    deviceInfo = null;
-                    logger.info("scanning");
-                    notifyListenersDeviceUpdated(null, "Scanning...", null);
-                    Device device = openDevice();
-                    if (device != null) {
-                        notifyListenersDeviceUpdated(device, "Opened", null);
-                        openedDevice.setDeviceRemovalListener(DeviceManager.this);
-                        openedDevice.setInputReportListener(DeviceManager.this);
-                        notifyListenersDeviceAttached(device);
-                    }
-                }
-                sleep(2000);
-            }
-        }
-    }
-
-    private final class OutputReportRunner implements Runnable {
+    private final class ConnectionChecker implements Runnable {
         @Override
         public void run() {
             int failCount = 0;
@@ -237,13 +211,13 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
             while (true) {
                 if (openedDevice != null) {
                     try {
-                        if (!versionReported) {
-                            //only need to do this once
-                            getOutputReport(Device.CMD_GET_SETTINGS, (byte) 0, data);
-                        } else {
-                            //use this as heartbeat to check usb connections
-                            getOutputReport(Device.CMD_HEARTBEAT, (byte) 0, data);
-                        }
+                        //if (! (deviceSettings.get(openedDevice) == null)) {
+                        //only need to do this once
+                        // getOutputReport(Device.CMD_GET_SETTINGS, (byte) 0, data);
+                        //} else {
+                        //use this as heartbeat to check usb connections
+                        getOutputReport(Device.CMD_HEARTBEAT, (byte) 0, data);
+                        //}
                         failCount = 0;
                         sleep(2000);
                     } catch (IOException ex) {
@@ -251,13 +225,14 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
                         if (failCount > 3) {
                             onDeviceRemoval(openedDevice);
                         }
-                        sleep(250);
+                        sleep(500);
                         logger.warning(ex.getMessage());
                     }
                 } else {
-                    sleep(500);
+                    sleep(2000);
+                    scanDevices();
                 }
             }
         }
-    }*/
+    }
 }

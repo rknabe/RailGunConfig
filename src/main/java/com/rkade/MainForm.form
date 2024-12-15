@@ -40,6 +40,9 @@
               <component id="e1af6" class="javax.swing.JButton" binding="btnConnect">
                 <constraints/>
                 <properties>
+                  <maximumSize width="95" height="34"/>
+                  <minimumSize width="95" height="34"/>
+                  <preferredSize width="95" height="34"/>
                   <text value="Connect"/>
                 </properties>
               </component>
@@ -49,8 +52,8 @@
                   <enabled value="true"/>
                   <focusable value="false"/>
                   <horizontalAlignment value="2"/>
-                  <minimumSize width="130" height="20"/>
-                  <preferredSize width="130" height="20"/>
+                  <minimumSize width="165" height="20"/>
+                  <preferredSize width="165" height="20"/>
                   <requestFocusEnabled value="true"/>
                   <text value="Scanning..."/>
                 </properties>

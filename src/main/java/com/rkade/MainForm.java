@@ -65,7 +65,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         triggerSpeedFormatter.setCommitsOnValidEdit(true);
         spAutoTriggerSpeed.setEditor(triggerSpeedEditor);
 
-        SpinnerNumberModel triggerHoldModel = new SpinnerNumberModel(1000, 0, 3000, 10);
+        SpinnerNumberModel triggerHoldModel = new SpinnerNumberModel(200, 0, 3000, 10);
         spTriggerHold.setModel(triggerHoldModel);
         JSpinner.NumberEditor triggerHoldEditor = new JSpinner.NumberEditor(spTriggerHold, "#");
         JFormattedTextField triggerHoldField = triggerHoldEditor.getTextField();
@@ -223,7 +223,14 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     @Override
     public void deviceFound(Device device) {
-        deviceListModel.addElement(device);
+        if (deviceListModel.getIndexOf(device) < 0) {
+            deviceListModel.addElement(device);
+            statusLabel.setText("Found, ready to connect...");
+        }
+        setPanelEnabled(true);
+        devicePanel.setEnabled(true);//these should always be enabled
+        btnConnect.setEnabled(true);
+        deviceList.setEnabled(true);
     }
 
     @Override
@@ -233,6 +240,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         setPanelEnabled(true);
         statusLabel.setText("Attached");
         buttonsPanel.deviceAttached(device);
+        devicePanel.setEnabled(true);//these should always be enabled
+        btnConnect.setEnabled(true);
+        deviceList.setEnabled(true);
     }
 
     @Override
@@ -243,6 +253,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         statusLabel.setText("Detached");
         buttonsPanel.deviceDetached(device);
         deviceListModel.removeElement(device);
+        devicePanel.setEnabled(true);//these should always be enabled
+        btnConnect.setEnabled(true);
+        deviceList.setEnabled(true);
     }
 
     @Override
