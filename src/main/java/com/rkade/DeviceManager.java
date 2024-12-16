@@ -193,9 +193,13 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     }
 
     public synchronized void scanDevices() {
+        scanDevices(filterToArduinos(PureJavaHidApi.enumerateDevices()));
+    }
+
+    public synchronized void scanDevices(List<HidDeviceInfo> devices) {
         byte[] reportData = new byte[OUTPUT_REPORT_DATA_LENGTH];
         devList.clear();
-        devList.addAll(filterToArduinos(PureJavaHidApi.enumerateDevices()));
+        devList.addAll(devices);
         for (HidDeviceInfo info : devList) {
             try {
                 HidDevice openedDevice = PureJavaHidApi.openDevice(info);
@@ -220,8 +224,7 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         return arduinos;
     }
 
-    private boolean devicesChanged() {
-        List<HidDeviceInfo> currentDevList = filterToArduinos(PureJavaHidApi.enumerateDevices());
+    private boolean devicesChanged(List<HidDeviceInfo> currentDevList) {
         HashSet<DeviceInfo> currentDevices = new HashSet<>();
         HashSet<DeviceInfo> previousDevices = new HashSet<>();
         for (HidDeviceInfo hidDeviceInfo : currentDevList) {
@@ -256,12 +259,11 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     private final class ConnectionChecker implements Runnable {
         @Override
         public void run() {
-            int failCount = 0;
-            byte[] data = new byte[OUTPUT_REPORT_DATA_LENGTH];
             while (true) {
-                if (devicesChanged()) {
+                List<HidDeviceInfo> devices = filterToArduinos(PureJavaHidApi.enumerateDevices());
+                if (devicesChanged(devices)) {
                     System.out.println("device change");
-                    scanDevices();
+                    scanDevices(devices);
                 }
                 sleep(2000);
             }
