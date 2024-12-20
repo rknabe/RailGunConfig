@@ -26,7 +26,7 @@ public class Device {
     public static final byte CMD_EELOAD = 17;
     public static final byte CMD_DEFAULT = 18;
     public static final byte CMD_RECOIL = 19;
-    public static final String SERIAL_CMD_GET_UNIQUE_ID = "getUniqueId";
+    public static final String SERIAL_CMD_GET_UNIQUE_ID = "getUniqueId!";
     public static final String FIRMWARE_TYPE = "RKADE-GUN";
     private static final Logger logger = Logger.getLogger(Device.class.getName());
     private final HidDevice hidDevice;
