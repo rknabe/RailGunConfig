@@ -1,6 +1,6 @@
 package com.rkade;
 
-import com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme;
+import com.formdev.flatlaf.intellijthemes.*;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
