@@ -167,22 +167,12 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
         boolean sent = device.setAxisLimits(nxMin, nxMax, nyMin, nyMax);
         if (!sent) {
-            System.out.println("failed to send calibration settings");
+            logger.warning("failed to send calibration settings");
         }
-    }
-
-    private boolean handleFocusLost(FocusEvent e) {
-        if (device != null) {
-        }
-        return true;
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        boolean status = handleFocusLost(e);
-        if (!status) {
-            logger.warning("Focus lost, failed for:" + e.getSource());
-        }
     }
 
     @Override
@@ -262,7 +252,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 }
                 short newValue = ival.shortValue();
                 if (lastSettings == null || newValue != lastSettings.getTriggerRepeatDelay()) {
-                    System.out.println("Sending trigger repeat:" + ival.shortValue());
                     status = device.setTriggerRepeatRate(ival.shortValue());
                 }
             } else if (e.getSource() == spTriggerHold) {
@@ -272,7 +261,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                 }
                 short newValue = ival.shortValue();
                 if (lastSettings == null || newValue != lastSettings.getTriggerHoldTime()) {
-                    System.out.println("Sending trigger hold:" + ival.shortValue());
                     status = device.setTriggerHoldTime(ival.shortValue());
                 }
             }
@@ -288,7 +276,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
             }
         }
     }
-
 
     public JComponent getRootComponent() {
         return mainPanel;

@@ -4,8 +4,6 @@ import com.fazecast.jSerialComm.SerialPort;
 import purejavahidapi.*;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -19,7 +17,6 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
     private final static Map<Device, SettingsDataReport> deviceSettings = Collections.synchronizedMap(new HashMap<>());
     private final static List<HidDeviceInfo> devList = Collections.synchronizedList(new ArrayList<>());
     private static final Random random = new Random();
-    private static final Comparator<HidDeviceInfo> hidDeviceInfoComparator = (a, b) -> a.getPath().compareTo(b.getPath());
     private static HidDevice openedDevice = null;
 
     public DeviceManager(DeviceListener listener) {
@@ -166,14 +163,6 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
         getOutputReport(openedDevice, dataType, dataIndex, data);
     }
 
-    private String getString(ByteBuffer buffer, int bytes) {
-        byte[] newArray = new byte[bytes];
-        for (int i = 0; i < bytes; i++) {
-            newArray[i] = buffer.get();
-        }
-        return new String(newArray, StandardCharsets.ISO_8859_1);
-    }
-
     public boolean connectDevice(Device device) {
         if (device != null) {
             if (openedDevice != null) {
@@ -262,7 +251,6 @@ public final class DeviceManager implements InputReportListener, DeviceRemovalLi
             while (true) {
                 List<HidDeviceInfo> devices = filterToArduinos(PureJavaHidApi.enumerateDevices());
                 if (devicesChanged(devices)) {
-                    System.out.println("device change");
                     scanDevices(devices);
                 }
                 sleep(2000);
