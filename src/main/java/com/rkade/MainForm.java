@@ -35,13 +35,9 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JSpinner spTriggerHold;
     private JLabel lblTriggerHold;
     private JComboBox<Device> deviceList;
-    private JLabel ammoLabel;
-    private JTextField ammoText;
-    private JPanel gunPanel;
     private JButton btnConnect;
     private JPanel devicePanel;
     private Device device = null;
-    private volatile boolean isWaitingOnDevice = false;
     private volatile boolean isCalibrating = false;
     private SettingsDataReport lastSettings = null;
     private DeviceManager deviceManager;
@@ -55,7 +51,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
 
     public MainForm() {
         controls = java.util.List.of(btnCalibrate, defaultsButton, saveButton, loadButton, cbAutoRecoil,
-                spAutoTriggerSpeed, spTriggerHold, ammoLabel, ammoText, deviceList, btnConnect);
+                spAutoTriggerSpeed, spTriggerHold, deviceList, btnConnect);
 
         SpinnerNumberModel triggerSpeedModel = new SpinnerNumberModel(100, 0, 3000, 10);
         spAutoTriggerSpeed.setModel(triggerSpeedModel);
@@ -128,19 +124,19 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     dialog.setVisible(true);
                 }
             } else if (e.getActionCommand().equals(saveButton.getActionCommand())) {
-                isWaitingOnDevice = true;
+                saveButton.setEnabled(false);
                 boolean status = device.saveSettings();
-                showWaitDialog();
+                saveButton.setEnabled(true);
                 return status;
             } else if (e.getActionCommand().equals(defaultsButton.getActionCommand())) {
-                isWaitingOnDevice = true;
+                defaultsButton.setEnabled(false);
                 boolean status = device.loadDefaults();
-                showWaitDialog();
+                defaultsButton.setEnabled(true);
                 return status;
             } else if (e.getActionCommand().equals(loadButton.getActionCommand())) {
-                isWaitingOnDevice = true;
+                loadButton.setEnabled(false);
                 boolean status = device.loadFromEeprom();
-                showWaitDialog();
+                loadButton.setEnabled(true);
                 return status;
             } else if (e.getActionCommand().equals(cbAutoRecoil.getActionCommand())) {
                 return device.setAutoRecoil(cbAutoRecoil.isSelected());
@@ -175,36 +171,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
         if (!sent) {
             System.out.println("failed to send calibration settings");
         }
-    }
-
-    private void showWaitDialog() {
-        JLabel validator = new JLabel("<html><body>Please wait, this may take up to 1 minute.</body></html>");
-        JOptionPane pane = new JOptionPane(validator, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION,
-                null, new Object[]{}, null);
-        final JDialog dialog = pane.createDialog(mainPanel, "Loading Settings...");
-        dialog.setModal(true);
-        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        SwingWorker<Void, Void> worker = new SwingWorker<>() {
-            public Void doInBackground() {
-                setPanelEnabled(false);
-                int seconds = 0;
-                isWaitingOnDevice = true;
-                do {
-                    try {
-                        Thread.sleep(1000);
-                        validator.setText(String.format("<html><body>Please wait, this may take up to 1 minute.<br/>Elapsed Seconds: %d</body></html>", ++seconds));
-                    } catch (InterruptedException ignored) {
-                    }
-                } while (isWaitingOnDevice);
-                dialog.setVisible(false);
-                setPanelEnabled(true);
-                return null;
-            }
-        };
-        isWaitingOnDevice = true;
-        worker.execute();
-        dialog.setVisible(true);
-        isWaitingOnDevice = true;
     }
 
     private boolean handleFocusLost(FocusEvent e) {
@@ -280,14 +246,11 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     spTriggerHold.setValue(settings.getTriggerHoldTime());
                 }
                 case AxisDataReport axisData -> axisPanel.deviceUpdated(device, status, axisData);
-                case GunDataReport gunData -> ammoText.setText(String.valueOf(gunData.getAmmoCount()));
+                //case GunDataReport gunData -> ammoText.setText(String.valueOf(gunData.getAmmoCount()));
                 default -> {
                 }
             }
             //}
-            if (isWaitingOnDevice) {
-                isWaitingOnDevice = false;
-            }
         }
     }
 

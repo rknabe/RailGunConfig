@@ -124,8 +124,8 @@
               <grid id="a1a7d" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="South"/>
                 <properties>
-                  <minimumSize width="736" height="100"/>
-                  <preferredSize width="736" height="100"/>
+                  <minimumSize width="736" height="50"/>
+                  <preferredSize width="736" height="50"/>
                 </properties>
                 <border type="bevel-raised"/>
                 <children>
@@ -193,35 +193,6 @@
                       <toolTipText value="Amount of time to hold trigger for auto-fire, if zero, auto-fire disabled"/>
                     </properties>
                   </component>
-                  <grid id="a9178" binding="gunPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-                    <constraints/>
-                    <properties>
-                      <minimumSize width="736" height="50"/>
-                      <preferredSize width="736" height="50"/>
-                    </properties>
-                    <border type="none"/>
-                    <children>
-                      <component id="f16dc" class="javax.swing.JLabel" binding="ammoLabel">
-                        <constraints/>
-                        <properties>
-                          <labelFor value="ce4ea"/>
-                          <text value="Ammo:"/>
-                        </properties>
-                      </component>
-                      <component id="ce4ea" class="javax.swing.JTextField" binding="ammoText">
-                        <constraints/>
-                        <properties>
-                          <autoscrolls value="false"/>
-                          <editable value="false"/>
-                          <enabled value="false"/>
-                          <maximumSize width="50" height="30"/>
-                          <minimumSize width="50" height="30"/>
-                          <preferredSize width="50" height="30"/>
-                          <text value=" 0"/>
-                        </properties>
-                      </component>
-                    </children>
-                  </grid>
                 </children>
               </grid>
             </children>

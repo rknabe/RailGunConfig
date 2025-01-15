@@ -3,7 +3,6 @@ package com.rkade;
 import com.fazecast.jSerialComm.SerialPort;
 import purejavahidapi.HidDevice;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,7 +44,7 @@ public class Device {
         try {
             boolean isOpen = port.isOpen();
             if (!isOpen) {
-                port.setBaudRate(9600);
+                port.setBaudRate(115200);
                 port.setParity(0);
                 port.setNumStopBits(1);
                 port.setNumDataBits(8);
@@ -135,34 +134,26 @@ public class Device {
     }
 
     private boolean sendCommand(byte command, short arg1, short arg2, short arg3, short arg4) {
-        final boolean[] status = {true};
-        //TODO: this will not work with CLI only invocation
-        SwingWorker<Void, Void> worker = new SwingWorker<>() {
-            public Void doInBackground() {
-                byte[] data = new byte[9];
-                data[0] = command;
-                data[1] = getFirstByte(arg1);
-                data[2] = getSecondByte(arg1);
+        byte[] data = new byte[9];
+        data[0] = command;
+        data[1] = getFirstByte(arg1);
+        data[2] = getSecondByte(arg1);
 
-                data[3] = getFirstByte(arg2);
-                data[4] = getSecondByte(arg2);
+        data[3] = getFirstByte(arg2);
+        data[4] = getSecondByte(arg2);
 
-                data[5] = getFirstByte(arg3);
-                data[6] = getSecondByte(arg3);
+        data[5] = getFirstByte(arg3);
+        data[6] = getSecondByte(arg3);
 
-                data[7] = getFirstByte(arg4);
-                data[8] = getSecondByte(arg4);
+        data[7] = getFirstByte(arg4);
+        data[8] = getSecondByte(arg4);
 
-                int ret = hidDevice.setOutputReport(CMD_REPORT_ID, data, 9);
-                if (ret <= 0) {
-                    logger.severe("Device returned error on Save:" + ret);
-                    status[0] = false;
-                }
-                return null;
-            }
-        };
-        worker.execute();
-        return status[0];
+        int ret = hidDevice.setOutputReport(CMD_REPORT_ID, data, 9);
+        if (ret <= 0) {
+            logger.severe("Device returned error on Save:" + ret);
+            return false;
+        }
+        return true;
     }
 
     public HidDevice getHidDevice() {
