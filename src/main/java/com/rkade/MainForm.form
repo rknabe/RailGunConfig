@@ -121,7 +121,7 @@
             </properties>
             <border type="bevel-lowered"/>
             <children>
-              <grid id="a1a7d" binding="buttonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+              <grid id="a1a7d" binding="settingsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="South"/>
                 <properties>
                   <minimumSize width="736" height="50"/>

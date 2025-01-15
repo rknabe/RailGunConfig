@@ -1,6 +1,5 @@
 package com.rkade;
 
-import com.formdev.flatlaf.intellijthemes.*;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
@@ -100,7 +99,7 @@ public class App {
                 try {
                     //com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMonokaiProIJTheme.setup();
                     //com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme.setup();
-                    FlatMaterialDesignDarkIJTheme.setup();
+                    com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme.setup();
                     JFrame frame = new JFrame("RKADE Gun Config");
                     MainForm mainForm = new MainForm();
                     frame.setContentPane(mainForm.getRootComponent());

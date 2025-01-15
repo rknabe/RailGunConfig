@@ -28,7 +28,7 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
     private JPanel axisPanelParent;
     private JButton btnCalibrate;
     private JPanel northPanel;
-    private JPanel buttonPanel;
+    private JPanel settingsPanel;
     private JCheckBox cbAutoRecoil;
     private JSpinner spAutoTriggerSpeed;
     private JLabel lblAutoTrigger;
@@ -101,25 +101,14 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
                     device.setAxisLimits((short) 0, (short) 1023, (short) 0, (short) 1023);
                     btnCalibrate.setText("Calibrating...");
                     axisPanel.setCalibrating(true);
-                    JLabel validator = new JLabel("<html><body>Please move the crosshair to each corner</body></html>");
+                    JLabel validator = new JLabel("<html><body>Please move the crosshair to each corner." +
+                            "<br>Click 'Save Settings' afterward to make changes permanent.</br></body></html>");
                     JOptionPane pane = new JOptionPane(validator, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION,
                             null, new Object[]{}, null);
                     final JDialog dialog = pane.createDialog(mainPanel, "Calibrating");
                     dialog.setModal(true);
                     dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                    final Timer timer = new Timer(10000, null);
-                    ActionListener taskPerformer = new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            isCalibrating = false;
-                            axisPanel.setCalibrating(false);
-                            dialog.setVisible(false);
-                            btnCalibrate.setText("Calibrate");
-                            btnCalibrate.setEnabled(true);
-                            updateCalibrationSettings();
-                            timer.stop();
-                        }
-                    };
-                    timer.addActionListener(taskPerformer);
+                    final Timer timer = getTimer(dialog, 12000);
                     timer.start();
                     dialog.setVisible(true);
                 }
@@ -141,19 +130,28 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
             } else if (e.getActionCommand().equals(cbAutoRecoil.getActionCommand())) {
                 return device.setAutoRecoil(cbAutoRecoil.isSelected());
             }
-        } else {
-            if (e.getActionCommand().equals(btnConnect.getActionCommand())) {
-                return deviceManager.connectDevice((Device) deviceList.getSelectedItem());
-            } else if (e.getActionCommand().equals(deviceList.getActionCommand())) {
-                if (deviceList.getSelectedItem() == null) {
-                    btnConnect.setEnabled(false);
-                } else {
-                    btnConnect.setEnabled(true);
-                }
-            }
         }
-
+        if (e.getActionCommand().equals(btnConnect.getActionCommand())) {
+            return deviceManager.connectDevice((Device) deviceList.getSelectedItem());
+        } else if (e.getActionCommand().equals(deviceList.getActionCommand())) {
+            btnConnect.setEnabled(deviceList.getSelectedItem() != null);
+        }
         return true;
+    }
+
+    private Timer getTimer(JDialog dialog, int delay) {
+        final Timer timer = new Timer(delay, null);
+        ActionListener taskPerformer = e1 -> {
+            isCalibrating = false;
+            axisPanel.setCalibrating(false);
+            dialog.setVisible(false);
+            btnCalibrate.setText("Calibrate");
+            btnCalibrate.setEnabled(true);
+            updateCalibrationSettings();
+            timer.stop();
+        };
+        timer.addActionListener(taskPerformer);
+        return timer;
     }
 
     private void updateCalibrationSettings() {
@@ -193,7 +191,6 @@ public class MainForm extends BaseForm implements DeviceListener, ActionListener
             deviceListModel.addElement(device);
             statusLabel.setText("Found, ready to connect...");
         }
-        setPanelEnabled(true);
         devicePanel.setEnabled(true);//these should always be enabled
         btnConnect.setEnabled(true);
         deviceList.setEnabled(true);
